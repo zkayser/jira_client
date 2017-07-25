@@ -1,6 +1,19 @@
 # JiraClient
 
-**TODO: Add description**
+A jira command line client that allows developers to work with the issue tracking tool
+while developing code. Specifically addresses the problem of including a JIRA issue
+number in a commit message.
+
+For exxaple, a use case might look like this.
+
+   : jira_client create_issue -m "change code to make it better" -p "JIRA Project Name" -m "JIRA fix version"
+   Issue created: XXX-123
+
+Once a set of commits are complete for an issue the issue can be closed.
+
+   : jira_client close_issue -i XXX-123
+   Issue closed: XXX-123
+
 
 ## Installation
 
