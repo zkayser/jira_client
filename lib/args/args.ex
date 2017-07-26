@@ -1,6 +1,11 @@
 defmodule JiraClient.Args do
   defstruct command: "", project: "", issue: "", fix_version: "", message: ""
 
+  @command_args %{
+    create_issue: [:project, :fixVersion, :message],
+    close_issue:  [:issue]
+  }
+
   @doc """
     command      action to be taken
     --message    A summary to add to the issue
@@ -41,16 +46,19 @@ defmodule JiraClient.Args do
     "missing command"
   end
 
-  defp validate({[], _, _}) do
-    "missing arguments"
+  defp validate({args, ["create_issue"], invalid}) do
+    case Enum.map(args, &(elem(&1,0))) == @command_args.create_issue do
+      false -> "missing arguments for create_issue command"
+      true  -> {args, ["create_issue"], invalid}
+    end
   end
 
-  #defp validate({args, ["create_issue"], _}) do
-    #cond args do
-     
-    #end
-    #"missing arguments for create_issue command"
-  #end
+  defp validate({args, ["close_issue"], invalid}) do
+    case Enum.map(args, &(elem(&1,0))) == @command_args.close_issue do
+      false -> "missing arguments for close_issue command"
+      true  -> {args, ["close_issue"], invalid}
+    end
+  end
 
   defp validate(args) do
     args
