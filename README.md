@@ -19,6 +19,12 @@ $ jira_client close_issue -i XXX-123
 Issue closed: XXX-123
 ```
 
+## Future command ideas
+
+* List fix versions for a project.
+* Assign issue to me
+* Initiate workflow event for issue.
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
