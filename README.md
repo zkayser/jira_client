@@ -7,16 +7,16 @@ number in a commit message.
 Usage:
 ```bash
 
-   $ jira_client create_issue -m "change code to make it better" -p "JIRA Project Name" -m "JIRA fix version"
-   Issue created: XXX-123
+$ jira_client create_issue -m "change code to make it better" -p "Project Name" -m "Fix Version"
+Issue created: XXX-123
 ```
 
 Once a set of commits are complete for an issue the issue can be closed.
 
 ```bash
 
-   $ jira_client close_issue -i XXX-123
-   Issue closed: XXX-123
+$ jira_client close_issue -i XXX-123
+Issue closed: XXX-123
 ```
 
 ## Installation
