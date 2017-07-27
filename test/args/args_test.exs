@@ -1,6 +1,5 @@
 defmodule JiraClient.ArgsTest do
   use ExUnit.Case, async: true
-  #doctest JiraClient.Args
   alias JiraClient.Args
 
   # {[project: "PROJECT ONE", fixVersion: "1.2.3.4", issue: "XXX-123"], ["create_issue"], []}
