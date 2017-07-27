@@ -49,7 +49,15 @@ defmodule JiraClient.Args do
   end
 
   defp validate({args, [command], invalid}) when command in @valid_commands do
-    validate_args(args, command, invalid)
+    with given_args_keys <- args |> Keyword.keys |> Enum.sort,
+      command_atom <- String.to_existing_atom(command),
+      required_keys <- @command_args[command_atom] |> Enum.sort,
+      true <- given_args_keys == required_keys
+    do
+      {args, [command], invalid}
+    else
+      false -> "missing arguments for #{command} command"
+    end
   end
 
   defp validate({_, [command], _}) do
@@ -62,12 +70,5 @@ defmodule JiraClient.Args do
 
   defp validate(args) do
     args
-  end
-
-  defp validate_args(args, command, invalid) do
-    case Enum.map(args, &(elem(&1,0))) == @command_args[String.to_existing_atom(command)] do
-      false -> "missing arguments for #{command} command"
-      true  -> {args, [command], invalid}
-    end
   end
 end
