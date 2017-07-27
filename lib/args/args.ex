@@ -47,17 +47,11 @@ defmodule JiraClient.Args do
   end
 
   defp validate({args, ["create_issue"], invalid}) do
-    case Enum.map(args, &(elem(&1,0))) == @command_args.create_issue do
-      false -> "missing arguments for create_issue command"
-      true  -> {args, ["create_issue"], invalid}
-    end
+    validate_args(args, "create_issue", invalid)
   end
 
   defp validate({args, ["close_issue"], invalid}) do
-    case Enum.map(args, &(elem(&1,0))) == @command_args.close_issue do
-      false -> "missing arguments for close_issue command"
-      true  -> {args, ["close_issue"], invalid}
-    end
+    validate_args(args, "close_issue", invalid)
   end
 
   defp validate({_, [command], _}) do
@@ -72,4 +66,10 @@ defmodule JiraClient.Args do
     args
   end
 
+  defp validate_args(args, command, invalid) do
+    case Enum.map(args, &(elem(&1,0))) == @command_args[String.to_existing_atom(command)] do
+      false -> "missing arguments for #{command} command"
+      true  -> {args, [command], invalid}
+    end
+  end
 end
