@@ -1,5 +1,5 @@
 defmodule JiraClient.ArgsTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   #doctest JiraClient.Args
   alias JiraClient.Args
 
