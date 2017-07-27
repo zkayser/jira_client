@@ -6,6 +6,8 @@ defmodule JiraClient.Args do
     close_issue:  [:issue]
   }
 
+  @valid_commands ~w(create_issue close_issue)
+
   @doc """
     command      action to be taken
     --message    A summary to add to the issue
@@ -17,10 +19,10 @@ defmodule JiraClient.Args do
       {[:ok|:error], Args}
   """
   def parse(argv) do
-    OptionParser.parse(argv, 
-      strict: [project: :string, message: :string, issue: :string, fixVersion: :string], 
+    OptionParser.parse(argv,
+      strict: [project: :string, message: :string, issue: :string, fixVersion: :string],
       aliases: [m: :message, p: :project, f: :fixVersion, i: :issue])
-    |> validate 
+    |> validate
     |> new
   end
 
@@ -46,12 +48,8 @@ defmodule JiraClient.Args do
     "missing command"
   end
 
-  defp validate({args, ["create_issue"], invalid}) do
-    validate_args(args, "create_issue", invalid)
-  end
-
-  defp validate({args, ["close_issue"], invalid}) do
-    validate_args(args, "close_issue", invalid)
+  defp validate({args, [command], invalid}) when command in @valid_commands do
+    validate_args(args, command, invalid)
   end
 
   defp validate({_, [command], _}) do
