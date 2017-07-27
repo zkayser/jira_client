@@ -60,6 +60,10 @@ defmodule JiraClient.Args do
     end
   end
 
+  defp validate({_, [command], _}) do
+      "invalid command: '#{command}'"
+  end
+
   defp validate(args) do
     args
   end

@@ -56,6 +56,10 @@ defmodule JiraClient.ArgsTest do
     test "no command" do
       assert {:error, "missing command"} == Args.parse(["--project", "PROJECT ONE"])
     end
+
+    test "invalid command" do
+      assert {:error, "invalid command: 'invalid_command'"} == Args.parse(["invalid_command", "--project", "PROJECT ONE"])
+    end
   end
 
 end
