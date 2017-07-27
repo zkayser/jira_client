@@ -60,6 +60,16 @@ defmodule JiraClient.ArgsTest do
     test "invalid command" do
       assert {:error, "invalid command: 'invalid_command'"} == Args.parse(["invalid_command", "--project", "PROJECT ONE"])
     end
+
+    test "multiple command 2" do
+      assert {:error, "only one command please: [\"invalid1\", \"invalid2\"]"} == 
+        Args.parse(["invalid1", "invalid2", "--project", "PROJECT ONE"])
+    end
+
+    test "multiple command 3" do
+      assert {:error, "only one command please: [\"invalid1\", \"invalid2\", \"invalid3\"]"} == 
+        Args.parse(["invalid1", "invalid2", "invalid3", "--project", "PROJECT ONE"])
+    end
   end
 
 end
