@@ -7,8 +7,9 @@ defmodule JiraClient.Api.RequestTest do
 
 
   test "Request.new" do
-    JiraClient.FileUtils.delete_creds_file()
-    JiraClient.FileUtils.write_credentials(Base.encode64("username:password"))
+    unless JiraClient.FileUtils.creds_file_exists?() do
+      JiraClient.FileUtils.write_credentials(Base.encode64("username:password"))
+    end
 
     req = Request.new(@example_body, @path)
     {:ok, body} = Poison.encode(@example_body)
