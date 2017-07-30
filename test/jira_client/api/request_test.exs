@@ -7,10 +7,11 @@ defmodule JiraClient.Api.RequestTest do
 
   test "Request.new" do
     req = Request.new(@example_body, @path)
+    {:ok, body} = Poison.encode(@example_body)
     assert req.http_method == :get
     assert req.path == @path
     assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Credentials.get()}"]
-    assert req.body == Poison.encode(@example_body)
+    assert req.body == body
     assert req.base_url == System.get_env("JIRA_BASE_URL")
   end
 
