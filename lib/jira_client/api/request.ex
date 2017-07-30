@@ -15,7 +15,7 @@ defmodule JiraClient.Api.Request do
       body: body,
       path: path,
       base_url: Application.get_env(:jira_client, :base_url),
-      http_method: method
+      http_method: method,
     }
   end
 
@@ -24,7 +24,7 @@ defmodule JiraClient.Api.Request do
   end
 
   def send(%Request{headers: headers, body: "{}", http_method: method} = req) do
-    HTTPotion.request(method, url(req), [headers: headers]) 
+    HTTPotion.request(method, url(req), [headers: headers])
   end
 
   def send(%Request{headers: headers, body: body, http_method: method} = req) do

@@ -5,7 +5,11 @@ defmodule JiraClient.Api.RequestTest do
   @example_body %{field: :value, field2: %{key: :value2}}
   @path "rest/api/2"
 
+
   test "Request.new" do
+    JiraClient.FileUtils.delete_creds_file()
+    JiraClient.FileUtils.write_credentials(Base.encode64("username:password"))
+
     req = Request.new(@example_body, @path)
     {:ok, body} = Poison.encode(@example_body)
     assert req.http_method == :get
