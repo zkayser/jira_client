@@ -1,5 +1,5 @@
 defmodule JiraClient.FileUtilsTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias JiraClient.FileUtils
 
   test "make test directory" do
@@ -10,6 +10,7 @@ defmodule JiraClient.FileUtilsTest do
   end
 
   test "write credentials" do
+    FileUtils.delete_creds_file(:test)
     FileUtils.write_credentials(:test, "encoded credentials would go here")
     assert FileUtils.creds_file_exists?(:test)
     {:ok, content} = FileUtils.get_creds_file(:test) |> File.read()
@@ -19,7 +20,7 @@ defmodule JiraClient.FileUtilsTest do
   test "delete credentials file" do
     FileUtils.write_credentials(:test, "credentials...")
     assert FileUtils.creds_file_exists?(:test)
-    
+
     FileUtils.delete_creds_file(:test)
     refute FileUtils.creds_file_exists?(:test)
   end
