@@ -2,6 +2,7 @@ defmodule JiraClient.Auth.CredentialsTest do
   use ExUnit.Case, async: true
   alias JiraClient.Auth.Credentials
   alias JiraClient.FileUtils
+  import ExUnit.CaptureIO
 
   describe "init" do
     test "credentials with username and password" do
@@ -19,8 +20,16 @@ defmodule JiraClient.Auth.CredentialsTest do
   end
 
   describe "get" do
-    test "credentials file exists" do
+    test "returns encoded credentials when credentials file exists" do
       assert Credentials.get(test_file()) == Base.encode64("username:password")
+    end
+
+    test "prompts for username and password when credentials file does not exist" do
+      FileUtils.delete_creds_file()
+
+      assert capture_io(fn ->
+          Credentials.get()
+        end) == "Please provide your username and password.\nUsername:Password:"
     end
   end
 

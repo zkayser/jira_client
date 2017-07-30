@@ -33,8 +33,8 @@ defmodule JiraClient.FileUtils do
 
   def creds_file_exists?(env \\ :dev) do
     case env do
-      :dev -> check_file_exists(".jira/credentials.txt")
-      :test -> check_file_exists(".jira_test/credentials.txt")
+      :dev -> check_file_exists("#{@creds_dir}/#{@creds_file}")
+      :test -> check_file_exists("#{@test_creds_dir}/#{@creds_file}")
     end
   end
 
@@ -44,6 +44,13 @@ defmodule JiraClient.FileUtils do
     case env do
       :dev -> Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}")
       :test -> Path.expand("~") |> Path.join("#{@test_creds_dir}/#{@creds_file}")
+    end
+  end
+
+  def delete_creds_file(env \\ :dev) do
+    case env do
+      :dev -> File.rm_rf(get_creds_file())
+      :test -> File.rm_rf(get_creds_file(:test))
     end
   end
 

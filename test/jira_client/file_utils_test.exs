@@ -15,4 +15,12 @@ defmodule JiraClient.FileUtilsTest do
     {:ok, content} = FileUtils.get_creds_file(:test) |> File.read()
     assert "encoded credentials would go here" == String.trim(content)
   end
+
+  test "delete credentials file" do
+    FileUtils.write_credentials(:test, "credentials...")
+    assert FileUtils.creds_file_exists?(:test)
+    
+    FileUtils.delete_creds_file(:test)
+    refute FileUtils.creds_file_exists?(:test)
+  end
 end
