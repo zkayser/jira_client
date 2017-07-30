@@ -1,5 +1,8 @@
 # JiraClient
 
+![Travis build](https://travis-ci.org/zkayser/jira_client.svg?branch=master
+"Build Status")
+
 A **Jira** command line client that allows developers to work with the issue tracking tool
 while developing code. Specifically addresses the problem of including a **Jira** issue
 number in a commit message.
