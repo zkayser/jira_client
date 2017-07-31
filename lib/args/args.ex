@@ -1,27 +1,22 @@
 defmodule JiraClient.Args do
   defstruct command: "", project: "", issue: "", fix_version: "", message: ""
 
-  @command_args %{
-    create_issue: [:project, :fixVersion, :message],
-    close_issue:  [:issue]
+  # Definition of all commands accepted by jira client
+  @commands %{
+    "create_issue" => %{
+      args: [project: :string, message: :string, fixVersion: :string],
+      aliases: [m: :message, p: :project, f: :fixVersion],
+    },
+    "close_issue" =>  %{
+      args: [issue: :string],
+      aliases: [i: :issue],
+    }
   }
 
-  @valid_commands ~w(create_issue close_issue)
-
-  @doc """
-    command      action to be taken
-    --message    A summary to add to the issue
-    --project    [JIRA project name or id]
-    --issue      [JIRA issue number]
-    --fixVersion [JIRA project fix version]
-
-    Output:
-      {[:ok|:error], Args}
-  """
   def parse(argv) do
     OptionParser.parse(argv,
-      strict: [project: :string, message: :string, issue: :string, fixVersion: :string],
-      aliases: [m: :message, p: :project, f: :fixVersion, i: :issue])
+      strict:  command_to_strict_args(@commands),
+      aliases: command_to_aliases(@commands))
     |> validate
     |> new
   end
@@ -48,27 +43,41 @@ defmodule JiraClient.Args do
     "missing command"
   end
 
-  defp validate({args, [command], invalid}) when command in @valid_commands do
-    with given_args_keys <- args |> Keyword.keys |> Enum.sort,
-      command_atom <- String.to_existing_atom(command),
-      required_keys <- @command_args[command_atom] |> Enum.sort,
-      true <- given_args_keys == required_keys
-    do
-      {args, [command], invalid}
-    else
-      false -> "missing arguments for #{command} command"
+  defp validate({args, [command], invalid}) do
+    case Map.has_key?(@commands, command) do
+      true  -> validate_command({args, [command], invalid})
+      false -> "invalid command: '#{command}'"
     end
-  end
-
-  defp validate({_, [command], _}) do
-    "invalid command: '#{command}'"
   end
 
   defp validate({_, commands, _}) do
     "only one command please: #{inspect commands}"
   end
 
-  defp validate(args) do
-    args
+  defp validate_command({args, [command], invalid}) do
+    expected_args = command_to_args(@commands, command)
+    passed_args   = args |> Keyword.keys |> Enum.sort
+
+    case passed_args == expected_args do
+      true  -> {args, [command], invalid}
+      false -> "missing arguments for #{command} command"
+    end
+  end
+
+  # Prepare data for ParseOptions strict argument.
+  defp command_to_strict_args(commands) do
+    Enum.reduce(Map.values(commands), [], fn(command, acc) -> acc ++ command.args end)
+  end
+
+  # Prepare data for ParseOptions aliases argument.
+  defp command_to_aliases(commands) do
+    Enum.reduce(Map.values(commands), [], fn(command, acc) -> acc ++ command.aliases end)
+  end
+
+  # Prepare data for comparison with command line args.
+  defp command_to_args(commands, command) do
+    commands[command].args
+    |> Keyword.keys
+    |> Enum.sort
   end
 end
