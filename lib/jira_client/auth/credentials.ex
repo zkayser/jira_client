@@ -2,7 +2,7 @@ defmodule JiraClient.Auth.Credentials do
   @behaviour JiraClient.Credentials
 
   alias JiraClient.Credentials, as: Creds
-  alias JiraClient.FileUtils
+  alias JiraClient.Utils.FileUtils
   @moduledoc """
   This module contains functions for authenticating with the Jira
   Api using basic authentication

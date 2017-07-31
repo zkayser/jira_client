@@ -1,27 +1,31 @@
 defmodule JiraClient.FileUtilsTest do
   use ExUnit.Case
-  # alias JiraClient.FileUtils
 
-  # test "make test directory" do
-  #   Path.expand("~") |> File.cd()
-  #   File.rm_rf(".jira_test")
-  #   FileUtils.mkdir_for_credentials(:test)
-  #   assert Path.expand("~") |> Path.join(".jira_test") |> File.exists?
-  # end
-  #
-  # test "write credentials" do
-  #   FileUtils.delete_creds_file(:test)
-  #   FileUtils.write_credentials(:test, "encoded credentials would go here")
-  #   assert FileUtils.creds_file_exists?(:test)
-  #   {:ok, content} = FileUtils.get_creds_file(:test) |> File.read()
-  #   assert "encoded credentials would go here" == String.trim(content)
-  # end
-  #
-  # test "delete credentials file" do
-  #   FileUtils.write_credentials(:test, "credentials...")
-  #   assert FileUtils.creds_file_exists?(:test)
-  #
-  #   FileUtils.delete_creds_file(:test)
-  #   refute FileUtils.creds_file_exists?(:test)
-  # end
+  defmodule FileMock do
+
+    def cd(path) when is_binary(path)  do
+
+    end
+
+    def mkdir(path) when is_binary(path) do
+
+    end
+
+    def write(path, content) when is_binary(path) do
+
+    end
+
+    def read(path) when is_binary(path) do
+
+    end
+
+    def exists?(path) when is_binary(path) do
+
+    end
+
+    def rm_rf(path) when is_binary(path) do
+
+    end
+  end
+  
 end
