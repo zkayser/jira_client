@@ -1,5 +1,4 @@
 defmodule JiraClient.Credentials do
-  alias JiraClient.Credentials
 
   @doc """
   Initializes a user's Jira credentials
@@ -9,7 +8,7 @@ defmodule JiraClient.Credentials do
   @doc """
   Returns a user's encoded credentials
   """
-  @callback get(location :: String.t | atom(), io_module :: atom()) :: __MODULE__.t
+  @callback get(location :: String.t | atom()) :: __MODULE__.t
 
   @doc """
   Stores a user's credentials

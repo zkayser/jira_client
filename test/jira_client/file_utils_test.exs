@@ -1,6 +1,6 @@
 defmodule JiraClient.FileUtilsTest do
   use ExUnit.Case
-  alias JiraClient.FileUtils
+  # alias JiraClient.FileUtils
 
   # test "make test directory" do
   #   Path.expand("~") |> File.cd()

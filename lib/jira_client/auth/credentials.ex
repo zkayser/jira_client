@@ -2,7 +2,6 @@ defmodule JiraClient.Auth.Credentials do
   @behaviour JiraClient.Credentials
 
   alias JiraClient.Credentials, as: Creds
-  alias JiraClient.Auth.Credentials
   alias JiraClient.FileUtils
   @moduledoc """
   This module contains functions for authenticating with the Jira
@@ -26,8 +25,7 @@ defmodule JiraClient.Auth.Credentials do
     do
       String.trim(creds)
     else
-      false ->
-        credentials = get_credentials()
+      false -> get_credentials()
       {:error, reason} ->
         IO.puts "Something went wrong: #{reason}"
     end
