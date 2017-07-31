@@ -1,4 +1,4 @@
-defmodule JiraClient.FileUtilsTest do
+defmodule JiraClient.Utils.FileUtilsTest do
   use ExUnit.Case
 
   defmodule FileMock do
@@ -9,12 +9,13 @@ defmodule JiraClient.FileUtilsTest do
     def cd(path) when is_binary(path)  do
       case Agent.get(__MODULE__, fn state -> path in Map.keys(state) end) do
         true -> :ok
-        false -> {:error, :enoent}
+        _ -> {:error, :enoent}
       end
     end
 
     def mkdir(path) when is_binary(path) do
-      Agent.update(__MODULE__, &Map.put(&1, path, ""))
+      # Agent.update(__MODULE__, &Map.put(&1, path, ""))
+      fn () -> write(path, "") end
     end
 
     def write(path, content) when is_binary(path) do
