@@ -21,7 +21,8 @@ use Mix.Config
 #     config :logger, level: :info
 #
 config :jira_client,
-  base_url: System.get_env("JIRA_BASE_URL")
+  base_url: System.get_env("JIRA_BASE_URL"),
+  test_credentials: JiraClient.Auth.TestCredentials
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

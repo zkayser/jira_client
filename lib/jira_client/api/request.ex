@@ -8,14 +8,14 @@ defmodule JiraClient.Api.Request do
             base_url: "",
             http_method: :get
 
-  def new(method \\ :get, body, path) do
+  def new(method, body, path, creds_get_fn \\ fn -> Credentials.get() end) do
     {:ok, body} = Poison.encode(body)
     %Request{
-      headers: ["Content-Type": "application/json", "Authorization": "Basic #{Credentials.get()}"],
+      headers: ["Content-Type": "application/json", "Authorization": "Basic #{creds_get_fn.()}"],
       body: body,
       path: path,
       base_url: Application.get_env(:jira_client, :base_url),
-      http_method: method,
+      http_method: method
     }
   end
 
