@@ -15,8 +15,8 @@ defmodule JiraClient.Args do
 
   def parse(argv) do
     OptionParser.parse(argv,
-      strict:  command_to_strict_args(@commands),
-      aliases: command_to_aliases(@commands))
+      strict:  commands_as_strict_args(@commands),
+      aliases: commands_as_aliases(@commands))
     |> validate
     |> new
   end
@@ -55,7 +55,7 @@ defmodule JiraClient.Args do
   end
 
   defp validate_command({args, [command], invalid}) do
-    expected_args = command_to_args(@commands, command)
+    expected_args = commands_as_args(@commands, command)
     passed_args   = args |> Keyword.keys |> Enum.sort
 
     case passed_args == expected_args do
@@ -65,17 +65,17 @@ defmodule JiraClient.Args do
   end
 
   # Prepare data for ParseOptions strict argument.
-  defp command_to_strict_args(commands) do
+  defp commands_as_strict_args(commands) do
     Enum.reduce(Map.values(commands), [], fn(command, acc) -> acc ++ command.args end)
   end
 
   # Prepare data for ParseOptions aliases argument.
-  defp command_to_aliases(commands) do
+  defp commands_as_aliases(commands) do
     Enum.reduce(Map.values(commands), [], fn(command, acc) -> acc ++ command.aliases end)
   end
 
   # Prepare data for comparison with command line args.
-  defp command_to_args(commands, command) do
+  defp commands_as_args(commands, command) do
     commands[command].args
     |> Keyword.keys
     |> Enum.sort
