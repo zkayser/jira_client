@@ -21,7 +21,7 @@ defmodule JiraClient.Args do
     }
   defstruct command: "", project: "", issue: "", fix_version: "", message: ""
 
-  @spec parse(charlist) :: {atom, JiraClient.Args.t}
+  @spec parse(String.t) :: {atom, JiraClient.Args.t}
   def parse(argv) do
     OptionParser.parse(argv,
       strict:  commands_as_strict_args(@commands),
