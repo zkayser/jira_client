@@ -1,7 +1,5 @@
 defmodule JiraClient.Args do
 
-  defstruct command: "", project: "", issue: "", fix_version: "", message: ""
-
   # Definition of all commands accepted by jira client
   @commands %{
     "create_issue" => %{
@@ -15,12 +13,13 @@ defmodule JiraClient.Args do
   }
 
   @type t :: %JiraClient.Args{
-      command: charlist,
-      project: charlist,
-      issue: charlist,
-      fix_version: charlist,
-      message: charlist
+      command: String.t,
+      project: String.t,
+      issue: String.t,
+      fix_version: String.t,
+      message: String.t
     }
+  defstruct command: "", project: "", issue: "", fix_version: "", message: ""
 
   @spec parse(charlist) :: {atom, JiraClient.Args.t}
   def parse(argv) do
