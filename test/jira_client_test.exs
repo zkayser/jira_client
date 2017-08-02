@@ -4,6 +4,7 @@ defmodule JiraClientTest do
 
   import ExUnit.CaptureIO
 
+  # TODO using the config to inject alternate modules feels like a heavy solution. I would like to see a test specified solution.
   defmodule CommandFake.CreateIssue do
     def run(args) do
       IO.puts("Fake CreateIssue: #{inspect args}")
