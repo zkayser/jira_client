@@ -1,9 +1,19 @@
 defmodule JiraClient do
   alias JiraClient.Args
 
-  def main(args) do
-    IO.puts("Welcome to Jira Client: #{args}")
+  @command_module Application.get_env(:jira_client, :command_module, JiraClient.Command)
 
-    IO.inspect Args.parse(args)
+  def main(args) do
+    IO.puts("Welcome to Jira Client")
+
+    run Args.parse(args)
+  end
+
+  defp run({:ok, args}) do
+    JiraClient.Command.run(@command_module, args.command, args)
+  end
+
+  defp run({:error, args}) do
+    IO.puts("ERROR: #{args}")
   end
 end
