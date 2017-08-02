@@ -18,7 +18,7 @@ defmodule JiraClient.Utils.FileUtils do
 
   def creds_file_exists?(file_mod \\ File), do: Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}") |> file_mod.exists?()
 
-  def get_creds_file(file_mod \\ File), do: Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}")
+  def get_creds_file(), do: Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}")
 
   def delete_creds_file(file_mod \\ File), do: file_mod.rm_rf(get_creds_file())
 
