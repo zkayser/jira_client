@@ -1,5 +1,6 @@
 defmodule JiraClient.Command do
 
+  @spec run(String.t, String.t, []) :: {Atom.t, Sring.t}
   def run(command_module, command, args \\ []) do
     module_name = Macro.camelize(Atom.to_string(command_module))
     command_name = Macro.camelize(command)
