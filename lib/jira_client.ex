@@ -34,3 +34,4 @@ defmodule JiraClient do
     {:error, "#{args}"}
   end
 end
+

@@ -5,8 +5,8 @@ defmodule JiraClient.CommandTest do
   defmodule DoSomething do
     def run(args) do
       case args do
-        [] -> "no args"
-        _  -> hd(args)
+        [] -> {:ok, "no args"}
+        _  -> {:ok, hd(args)}
       end
     end
   end

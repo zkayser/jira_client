@@ -8,6 +8,7 @@ defmodule JiraClientTest do
   defmodule CommandFake.CreateIssue do
     def run(args) do
       IO.puts("Fake CreateIssue: #{inspect args}")
+      {:ok, inspect args}
     end
   end
 

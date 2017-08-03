@@ -2,6 +2,10 @@ defmodule JiraClient.Args do
 
   # Definition of all commands accepted by jira client
   @commands %{
+    "configure" => %{
+      args: [username: :string, password: :string],
+      aliases: [u: :username],
+    },
     "create_issue" => %{
       args: [project: :string, message: :string, fixVersion: :string],
       aliases: [m: :message, p: :project, f: :fixVersion],
@@ -13,15 +17,17 @@ defmodule JiraClient.Args do
   }
 
   @type t :: %JiraClient.Args{
-      command: String.t,
-      project: String.t,
-      issue: String.t,
-      fix_version: String.t,
-      message: String.t
-    }
-  defstruct command: "", project: "", issue: "", fix_version: "", message: ""
+     command:       String.t,
+     username:      String.t,
+     password:      String.t,
+     project:       String.t,
+     issue:         String.t,
+     fix_version:   String.t,
+     message:       String.t
+  }
+  defstruct command: "", username: "", password: "", project: "", issue: "", fix_version: "", message: ""
 
-  @spec parse(String.t) :: {atom, JiraClient.Args.t}
+  @spec parse(String.t) :: {Atom.t, JiraClient.Args.t}
   def parse(argv) do
     OptionParser.parse(argv,
       strict:  commands_as_strict_args(@commands),
@@ -33,6 +39,8 @@ defmodule JiraClient.Args do
   defp new({parsed, args, []}) do
     {:ok, %JiraClient.Args{
        command:       hd(args),
+       username:      parsed[:username],
+       password:      parsed[:password],
        project:       parsed[:project],
        issue:         parsed[:issue],
        fix_version:   parsed[:fixVersion],

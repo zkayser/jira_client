@@ -8,8 +8,15 @@ while developing code. Specifically addresses the problem of including a **Jira*
 number in a commit message.
 
 Usage:
-```bash
 
+Create a config file in your home dir (.jira/credentials.txt) to hold your jira credenitals.
+```bash
+jira_client configure --username <jira username> --password <jira password>
+```
+
+Create an issue.
+
+```bash
 $ jira_client create_issue -m "change code to make it better" -p "Project Name" -m "Fix Version"
 Issue created: XXX-123
 ```
@@ -17,7 +24,6 @@ Issue created: XXX-123
 Once a set of commits are complete for an issue the issue can be closed.
 
 ```bash
-
 $ jira_client close_issue -i XXX-123
 Issue closed: XXX-123
 ```

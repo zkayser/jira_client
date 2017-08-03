@@ -2,6 +2,32 @@ defmodule JiraClient.ArgsTest do
   use ExUnit.Case, async: true
   alias JiraClient.Args
 
+
+  describe "command configure" do
+
+    test "configure username and password" do
+      {:ok, args} = Args.parse(["configure", "--username", "fred", "--password", "secret"])
+
+     assert args.command == "configure"
+     assert args.username == "fred"
+     assert args.password == "secret"
+    end
+
+    test "configure username short form and password" do
+      {:ok, args} = Args.parse(["configure", "-u", "fred", "--password", "secret"])
+
+     assert args.command == "configure"
+     assert args.username == "fred"
+     assert args.password == "secret"
+    end
+
+    test "missing username and/or password" do
+      {:error, "missing arguments for configure command"} = Args.parse(["configure"])
+      {:error, "missing arguments for configure command"} = Args.parse(["configure", "--password", "secret"])
+      {:error, "missing arguments for configure command"} = Args.parse(["configure", "--username", "fred"])
+    end
+  end
+
   describe "command create_issue" do
     test "create_issue all args" do
       {:ok, args} = Args.parse(["create_issue", "--project", "PROJECT ONE", "--fixVersion", "1.2.3.4", "--message", "message"])
