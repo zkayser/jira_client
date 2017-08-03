@@ -22,7 +22,7 @@ defmodule JiraClient.CommandTest do
     test "Run a command" do
       {:ok, result} = JiraClient.Command.run(__MODULE__, "do_something", ["hello world"])
 
-      assert result == "hello world"
+      assert result == "hello world", "Shoudn't be #{inspect result}"
     end
   end
 
