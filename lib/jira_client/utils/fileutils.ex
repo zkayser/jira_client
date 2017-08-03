@@ -14,6 +14,11 @@ defmodule JiraClient.Utils.FileUtils do
     |> Path.join(@creds_dir)
     |> file_mod.cd()
     file_mod.write(@creds_file, credentials)
+
+    # Ensure only the user can read the file.
+    file_mod.chmod(@creds_dir, 0o700)
+    file_mod.chmod(@creds_file, 0o600)
+
   end
 
   def creds_file_exists?(file_mod \\ File), do: Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}") |> file_mod.exists?()

@@ -13,6 +13,10 @@ defmodule JiraClient.Utils.FileUtilsTest do
       end
     end
 
+    def chmod(path, mod) when is_binary(path) do
+      Agent.update(__MODULE__, &Map.put(&1, path, mod))
+    end
+
     def mkdir(path) when is_binary(path) do
       # Agent.update(__MODULE__, &Map.put(&1, path, ""))
       fn () -> write(path, "") end
