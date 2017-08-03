@@ -25,7 +25,9 @@ defmodule JiraClient.Auth.Credentials do
     do
       String.trim(creds)
     else
-      false -> get_credentials()
+      false ->
+        IO.puts "Your credentials have not been configured. Run the following command for access your Jira instance: "
+        IO.puts "jira_client configure --username <jira username> --password <jira password>"
       {:error, reason} ->
         IO.puts "Something went wrong: #{reason}"
     end
@@ -41,19 +43,6 @@ defmodule JiraClient.Auth.Credentials do
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials(encoded)
     creds
-  end
-
-  defp get_credentials do
-    IO.puts "Please provide your username and password."
-    init(get_username(), get_password())
-  end
-
-  defp get_username do
-    IO.gets "Username: " |> String.trim()
-  end
-
-  defp get_password do
-    IO.gets "Password: " |> String.trim()
   end
 
   defp build_credentials(nil), do: %Creds{errors: ["Credentials not provided"]}
