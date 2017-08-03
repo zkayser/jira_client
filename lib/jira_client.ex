@@ -5,9 +5,25 @@ defmodule JiraClient do
   @command_module Application.get_env(:jira_client, :command_module, JiraClient.Command)
 
   def main(args) do
+    args
+    |> main_client
+    |> System.stop
+  end
+
+  def main_client(args) do
     IO.puts("Welcome to Jira Client")
 
-    run Args.parse(args)
+    case run Args.parse(args) do
+      {:ok, message} -> 
+        IO.puts message
+        0
+      {:error, message} -> 
+        IO.puts "ERROR: #{message}"
+        1
+      message ->
+        IO.puts "ERROR: #{inspect message}"
+        2
+    end
   end
 
   defp run({:ok, args}) do
@@ -15,6 +31,6 @@ defmodule JiraClient do
   end
 
   defp run({:error, args}) do
-    IO.puts("ERROR: #{args}")
+    {:error, "#{args}"}
   end
 end

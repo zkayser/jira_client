@@ -11,17 +11,21 @@ defmodule JiraClientTest do
     end
   end
 
-  test "call main with valid argument" do
+  test "call main_client with valid argument" do
     output = capture_io(fn ->
-      JiraClient.main(["create_issue", "--project", "PROJECT A", "--fixVersion", "1.2.3", "--message", "MESSAGE A"])
+      exit_code = JiraClient.main_client(["create_issue", "--project", "PROJECT A", "--fixVersion", "1.2.3", "--message", "MESSAGE A"])
+
+      assert 0 == exit_code
     end)
 
     assert Regex.match?(~r/Fake CreateIssue/, output), "Output doesn't match expected text: '#{output}'"
   end
 
-  test "call main with bad arguments" do
+  test "call main_client with bad arguments" do
     output = capture_io(fn ->
-      JiraClient.main(["invalid"])
+      exit_code = JiraClient.main_client(["invalid"])
+
+      assert 1 == exit_code
     end)
 
     assert Regex.match?(~r/Welcome to Jira Client/, output), "Output doesn't match expected text: '#{output}'"
