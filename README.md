@@ -28,17 +28,41 @@ Issue closed: XXX-123
 * Assign issue to me
 * Initiate workflow event for issue.
 
-## Installation
+## Developer Workflow
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `jira_client` to your list of dependencies in `mix.exs`:
+Each developer must attend to change tracking against the story they are working on. This flow 
+requires the following basic steps:
 
-```elixir
-def deps do
-  [{:jira_client, "~> 0.1"}]
-end
+* Identity the project story id of the story to be completed.
+* Change the apprppriate code.
+* Create a product change id to associate the code changes.
+* Commit the code changes with the product change id.
+* Repeat code changes and committing to product change id's as needed.
+* Associate product change id with project story id.
+
+These steps can be optimized into the following flow:
+
+* Identity and remember the project story id.
+* Change the appropriate code.
+* Commit change with new product change id that is associated with project story id.
+
+This limits the developers work to two administrative steps allowing more focused time on coding.
+
+This might follow this command sequence:
+
+```bash
+$ track_story STORY_ID | "Story summary"
+$ vi ...
+$ track_change "refactor bad code to make it good"
+$ vi ...
+$ track_change "refactor more bad code to make it good"
+$ vi ...
+$ track_change "refactor more bad code to make it good"
+$ go home.
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/jira_client](https://hexdocs.pm/jira_client).
+## Installation
+
+TBD
+
+
