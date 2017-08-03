@@ -10,6 +10,7 @@ number in a commit message.
 Usage:
 
 Create a config file in your home dir (.jira/credentials.txt) to hold your jira credenitals.
+
 ```bash
 jira_client configure --username <jira username> --password <jira password>
 ```
@@ -69,6 +70,8 @@ $ go home.
 
 ## Installation
 
-TBD
+Generate the executable
+
+> mix escript.build
 
 
