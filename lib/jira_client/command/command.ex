@@ -1,14 +1,4 @@
 defmodule JiraClient.Command do
-  defmacro left >>> right do
-    quote do
-      (fn ->
-        case unquote(left) do
-          {:ok, x} -> x |> unquote(right)
-          {:error, _} = expr -> expr
-        end
-      end).()
-    end
-  end
 
   def run(command_module, command, args \\ []) do
     module_name = Macro.camelize(Atom.to_string(command_module))
