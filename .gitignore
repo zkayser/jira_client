@@ -24,3 +24,6 @@ erl_crash.dump
 # Executables
 /bin/*
 
+# Editor specific project files
+untitled.sublime-project
+untitled.sublime-workspace
