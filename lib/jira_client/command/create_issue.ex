@@ -3,8 +3,9 @@ defmodule JiraClient.Command.CreateIssue do
     Creates a JIRA issue related to a project, with a speciric fixVersion.
   """
 
-  def run(args) do
+  @behaviour JiraClient.Command
 
+  def run(args) do
     {:ok, inspect args}
   end
 end

@@ -1,5 +1,21 @@
 defmodule JiraClient.Command do
+  @moduledoc """
+    Convert a command name entered on the command lin into a call to the 
+    implementation for that command.
 
+    Convention:
+    * create_issue maps to CreateIssue
+  """
+
+  @doc """
+    Each command is implemented as a separate module with a single run metho din it.
+    This method must conform to this callback,
+  """
+  @callback run(JiraClient.Args.t) :: {Atom.t, String.t}
+
+  @doc """
+    Dispatch to a command based on the name of the command and its arguments.
+  """
   @spec run(String.t, String.t, []) :: {Atom.t, Sring.t}
   def run(command_module, command, args \\ []) do
     module_name = Macro.camelize(Atom.to_string(command_module))

@@ -11,11 +11,9 @@ defmodule JiraClient.Command.CloseIssue do
     Documentation: https://docs.atlassian.com/jira/REST/cloud/#api/2/issue-doTransition
   """
 
-  @spec run(JiraClient.Args.t) :: {Atom.t, String.t}
+  @behaviour JiraClient.Command
+
   def run(args) do
-
-    
-
     {:ok, inspect args}
   end
 end
