@@ -3,10 +3,17 @@ defmodule JiraClient.Command.CreateIssue do
     Creates a JIRA issue related to a project, with a speciric fixVersion.
   """
 
+  alias JiraClient.Api.CreateIssue, as: ApiCreateIssue
+  alias JiraClient.Api.CreateIssueRequest, as: ApiCreateIssueRequest
+  alias JiraClient.Api.CreateIssueResponse, as: ApiCreateIssueResponse
+
   @behaviour JiraClient.Command
 
   def run(args) do
-    {:ok, inspect args}
+    args
+    |> ApiCreateIssueRequest.format
+    |> ApiCreateIssue.send
+    |> ApiCreateIssueResponse.parse
   end
 end
 

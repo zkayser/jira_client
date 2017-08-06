@@ -6,9 +6,11 @@ defmodule JiraClient.Command.CreateIssueTest do
 
   describe "Success" do
 
+    @tag skip: "not implemented yet."
     test "create issue" do
+      result = CreateIssue.run(%{project_key: "ABC-123", fix_version: "1.2.3", message: "MESSAGE 1" })
 
-      CreateIssue.run(%{project: "PROJECT X", fix_version: "1.2.3", message: "MESSAGE 1" })
+      IO.puts(">>>> #{inspect result}")
     end
   end
 end
