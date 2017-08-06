@@ -1,4 +1,10 @@
 defmodule JiraClient.Api.Request do
+  @moduledoc """
+    Client for the JIRA REST API.
+
+    Documentation: https://docs.atlassian.com/jira/REST/cloud/
+  """
+
   alias JiraClient.Api.Request
   alias JiraClient.Auth.Credentials
 
