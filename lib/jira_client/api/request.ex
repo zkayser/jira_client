@@ -5,6 +5,11 @@ defmodule JiraClient.Api.Request do
     Documentation: https://docs.atlassian.com/jira/REST/cloud/
   """
 
+  @doc """
+    Allow an arbitrary set of parameters to be formatted into a json string.
+  """
+  @callback format(Map.t) :: String.t
+
   alias JiraClient.Api.Request
   alias JiraClient.Auth.Credentials
 
