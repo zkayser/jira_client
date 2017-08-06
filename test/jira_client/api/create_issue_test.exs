@@ -4,7 +4,7 @@ defmodule JiraClient.Api.CreateIssueTest do
 
   alias JiraClient.Api.CreateIssue
 
-  @tag skip: "not impleented yet"
+  @tag skip: "need to mock the send"
   test "send request" do
     {:ok, response} = CreateIssue.send("some request")
 

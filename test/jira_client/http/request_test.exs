@@ -3,6 +3,8 @@ defmodule JiraClient.Http.RequestTest do
   alias JiraClient.Http.Request
 
   @example_body %{field: :value, field2: %{key: :value2}}
+
+  # TODO move definition into Http.Request
   @path "rest/api/2"
 
   setup do

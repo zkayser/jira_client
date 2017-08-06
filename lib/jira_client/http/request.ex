@@ -9,6 +9,7 @@ defmodule JiraClient.Http.Request do
             http_method: :get
 
   def new(method, body, path, creds_get_fn \\ fn -> Credentials.get() end) do
+    # TODO remove this encode call in preference of an api with a consistent string in string out protocol.
     {:ok, body} = Poison.encode(body)
     %Request{
       headers: ["Content-Type": "application/json", "Authorization": "Basic #{creds_get_fn.()}"],
