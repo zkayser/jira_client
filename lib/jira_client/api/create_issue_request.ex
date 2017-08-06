@@ -1,5 +1,7 @@
 defmodule JiraClient.Api.CreateIssueRequest do
   @moduledoc """
+    Documentation: https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis/jira-rest-api-tutorials/jira-rest-api-example-create-issue
+
     {
       "fields": {
          "project":
@@ -18,7 +20,22 @@ defmodule JiraClient.Api.CreateIssueRequest do
   @behaviour JiraClient.Api.Request
 
   def format(request) do
-    inspect request
+    Poison.encode(%{
+      fields: %{
+        project: %{
+          key: request.project_key
+        },
+        summary: request.message,
+        fixVersions: [
+          %{
+            id: request.fix_version
+          }
+        ],
+        issuetype: %{
+          name: "Task"
+        }
+      }
+    })
   end
 
 end
