@@ -10,6 +10,8 @@ defmodule JiraClient.Command.CreateIssueTest do
     test "create issue" do
       result = CreateIssue.run(%{project_key: "ABC-123", fix_version: "1.2.3", message: "MESSAGE 1" })
 
+      # assert result.issue_id == "ISSUE-123"
+
       IO.puts(">>>> #{inspect result}")
     end
   end

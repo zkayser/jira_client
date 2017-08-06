@@ -10,7 +10,15 @@ defmodule JiraClient.Api.CreateIssueResponse do
   @behaviour JiraClient.Api.Response
 
   def parse(response) do
-    %{value: response}
+    parse_data Poison.Parser.parse(response)
+  end
+
+  defp parse_data({:ok, data}) do
+    {:ok,
+      %{
+       issue_id: data["key"]
+      }
+    }
   end
 end
 

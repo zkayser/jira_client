@@ -4,8 +4,15 @@ defmodule JiraClient.Api.CreateIssueResponseTest do
 
   alias JiraClient.Api.CreateIssueResponse
 
-  @tag skip: "not implemented yet"
   test "parse response" do
-    CreateIssueResponse.parse("asdfasdasdf")
+    json = ~s({
+        "id": "10000",
+        "key": "TST-24",
+        "self": "http://www.example.com/jira/rest/api/2/issue/10000"
+    })
+
+    {:ok, response} = CreateIssueResponse.parse(json)
+
+    assert response.issue_id == "TST-24"
   end
 end
