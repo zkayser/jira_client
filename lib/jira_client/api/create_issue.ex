@@ -4,7 +4,7 @@ defmodule JiraClient.Api.CreateIssue do
   """
 
   def send(request) do
-    JiraClient.Http.Request.new(:post, request, "rest/api/2/issue", fn -> Base.encode64("username:password") end)
+    JiraClient.Http.Request.new(:post, request, "rest/api/2/issue")
     |> JiraClient.Http.Request.send
   end
 end
