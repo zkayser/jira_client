@@ -18,12 +18,15 @@ defmodule JiraClient.Utils.FileUtils do
     # Ensure only the user can read the file.
     file_mod.chmod(@creds_dir, 0o700)
     file_mod.chmod(@creds_file, 0o600)
-
   end
 
-  def creds_file_exists?(file_mod \\ File), do: Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}") |> file_mod.exists?()
+  def creds_file_exists?(file_mod \\ File), do: get_creds_file() |> file_mod.exists?()
+
+  def creds_dir_exists?(file_mod \\ File), do: get_creds_dir() |> file_mod.exists?()
 
   def get_creds_file(), do: Path.expand("~") |> Path.join("#{@creds_dir}/#{@creds_file}")
+
+  def get_creds_dir(), do: Path.expand("~") |> Path.join("#{@creds_dir}")
 
   def delete_creds_file(file_mod \\ File), do: file_mod.rm_rf(get_creds_file())
 
