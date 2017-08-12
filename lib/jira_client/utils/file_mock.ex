@@ -57,6 +57,7 @@ defmodule JiraClient.Utils.FileMock do
     |> Enum.reduce(%{}, fn path, acc -> Map.put(acc, path, "") end)
     |> Map.put("cwd", cwd)
     |> Map.put("permissions", [])
+    |> Map.put(Path.expand("~"), "")
   end
 
   defp build_paths(elem, []), do: ["/" <> elem]

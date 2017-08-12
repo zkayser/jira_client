@@ -24,7 +24,7 @@ defmodule JiraClient.Http.Request do
     "#{base}/#{path}"
   end
 
-  def send(%Request{headers: headers, body: "{}", http_method: method} = req) do
+  def send(%Request{headers: headers, body: {}, http_method: method} = req) do
     HTTPotion.request(method, url(req), [headers: headers])
   end
 
