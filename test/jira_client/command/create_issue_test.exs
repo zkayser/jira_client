@@ -3,16 +3,25 @@ defmodule JiraClient.Command.CreateIssueTest do
   doctest JiraClient.Command.CreateIssue
 
   alias JiraClient.Command.CreateIssue
+  alias JiraClient.Http.RequestFake
+
+  setup do
+    RequestFake.init()
+  end
 
   describe "Success" do
 
-    @tag skip: "not implemented yet."
     test "create issue" do
-      result = CreateIssue.run(%{project_key: "ABC-123", fix_version: "1.2.3", message: "MESSAGE 1" })
+      RequestFake.expect_response(~s(
+        {
+          "id": "10000",
+          "key": "ISSUE-123",
+          "self": "http://www.example.com/jira/rest/api/2/issue/10000"
+        }))
 
-      # assert result.issue_id == "ISSUE-123"
+        {:ok, message} = CreateIssue.run(%{project_key: "ABC-123", fix_version: "1.2.3", message: "MESSAGE 1" })
 
-      IO.puts(">>>> #{inspect result}")
+      assert "Created ISSUE-123" == message
     end
   end
 end

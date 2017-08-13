@@ -10,10 +10,15 @@ defmodule JiraClient.Command.CreateIssue do
   @behaviour JiraClient.Command
 
   def run(args) do
-    args
-    |> ApiCreateIssueRequest.format
-    |> ApiCreateIssue.send
-    |> ApiCreateIssueResponse.parse
+    with request         <- ApiCreateIssueRequest.format(args),
+         {:ok, response} <- ApiCreateIssue.send(request),
+         {:ok, parsed}   <- ApiCreateIssueResponse.parse(response)
+    do
+      {:ok, "Created #{parsed.issue_id}"}
+    else
+      error -> error
+    end
+
   end
 end
 
