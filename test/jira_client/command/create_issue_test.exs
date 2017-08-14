@@ -3,6 +3,7 @@ defmodule JiraClient.Command.CreateIssueTest do
   doctest JiraClient.Command.CreateIssue
 
   alias JiraClient.Command.CreateIssue
+  alias JiraClient.Args
   alias JiraClient.Http.RequestFake
 
   setup do
@@ -19,7 +20,7 @@ defmodule JiraClient.Command.CreateIssueTest do
           "self": "http://www.example.com/jira/rest/api/2/issue/10000"
         }))
 
-        {:ok, message} = CreateIssue.run(%{project_key: "ABC-123", fix_version: "1.2.3", message: "MESSAGE 1" })
+        {:ok, message} = CreateIssue.run(%Args{project: "ABC-123", fix_version: "1.2.3", message: "MESSAGE 1" })
 
       assert "Created ISSUE-123" == message
     end
