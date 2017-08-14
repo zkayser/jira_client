@@ -1,5 +1,5 @@
 defmodule JiraClient.Command.CreateIssueTest do
-  Code.require_file("test/jira_client/http/request_fake.ex")
+  use JiraClient.CommonCase
   use ExUnit.Case
   doctest JiraClient.Command.CreateIssue
 
