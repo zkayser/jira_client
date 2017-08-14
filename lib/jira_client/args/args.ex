@@ -2,6 +2,10 @@ defmodule JiraClient.Args do
 
   # Definition of all commands accepted by jira client
   @commands %{
+    "help"      => %{
+      args:   [],
+      aliases: []
+    },
     "configure" => %{
       args: [username: :string, password: :string],
       aliases: [u: :username],
@@ -50,10 +54,6 @@ defmodule JiraClient.Args do
 
   defp new(message) do
     {:error, message}
-  end
-
-  defp validate({_, _, [invalid]}) do
-    "invalid arguments: #{inspect invalid}"
   end
 
   defp validate({_, [], _}) do

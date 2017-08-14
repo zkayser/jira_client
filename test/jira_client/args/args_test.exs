@@ -2,6 +2,14 @@ defmodule JiraClient.ArgsTest do
   use ExUnit.Case, async: true
   alias JiraClient.Args
 
+  describe "command help" do
+
+    test "help" do
+      {:ok, args} = Args.parse(["help"])
+
+      assert args.command == "help"
+    end
+  end
 
   describe "command configure" do
 
@@ -47,9 +55,12 @@ defmodule JiraClient.ArgsTest do
 
     test "create_issue missing argument" do
       expected_error = {:error, "missing arguments for create_issue command"}
-      assert expected_error == Args.parse(["create_issue", "--project", "PROJECT ONE", "--fixVersion", "1.2.3.4"]) # missing message
-      assert expected_error == Args.parse(["create_issue", "--fixVersion", "1.2.3.4", "--message", "message"])     # missing project
-      assert expected_error == Args.parse(["create_issue", "--project", "PROJECT ONE", "--message", "message"])    # missing fix version
+      assert expected_error == 
+        Args.parse(["create_issue", "--project", "PROJECT ONE", "--fixVersion", "1.2.3.4"]) # missing message
+      assert expected_error == 
+        Args.parse(["create_issue", "--fixVersion", "1.2.3.4", "--message", "message"])     # missing project
+      assert expected_error == 
+        Args.parse(["create_issue", "--project", "PROJECT ONE", "--message", "message"])    # missing fix version
     end
    end
 
@@ -74,10 +85,6 @@ defmodule JiraClient.ArgsTest do
   end
 
   describe "argument validation" do
-
-    test "invalid arguments" do
-      assert {:error, "invalid arguments: {\"--invalid\", nil}"} == Args.parse(["--invalid"])
-    end
 
     test "no command" do
       assert {:error, "missing command"} == Args.parse(["--project", "PROJECT ONE"])
