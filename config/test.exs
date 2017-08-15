@@ -1,4 +1,6 @@
 use Mix.Config
+Code.require_file("lib/jira_client/http/request.ex")
+Code.require_file("test/jira_client/http/request_fake.ex")
 
 config :jira_client, 
   base_url: System.get_env("JIRA_BASE_URL"),

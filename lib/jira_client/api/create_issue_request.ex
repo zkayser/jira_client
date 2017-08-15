@@ -23,7 +23,7 @@ defmodule JiraClient.Api.CreateIssueRequest do
     Poison.encode(%{
       fields: %{
         project: %{
-          key: request.project_key
+          key: request.project
         },
         summary: request.message,
         fixVersions: [
