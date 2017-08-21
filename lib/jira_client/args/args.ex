@@ -21,15 +21,16 @@ defmodule JiraClient.Args do
   }
 
   @type t :: %JiraClient.Args{
-     command:       String.t,
-     username:      String.t,
-     password:      String.t,
-     project:       String.t,
-     issue:         String.t,
-     fix_version:   String.t,
-     message:       String.t
+     command:          String.t,
+     username:         String.t,
+     password:         String.t,
+     project:          String.t,
+     issue:            String.t,
+     fix_version:      String.t,
+     message:          String.t,
+     close_transition: String.t
   }
-  defstruct command: "", username: "", password: "", project: "", issue: "", fix_version: "", message: ""
+  defstruct command: "", username: "", password: "", project: "", issue: "", fix_version: "", message: "", close_transition: ""
 
   @spec parse(String.t) :: {Atom.t, JiraClient.Args.t}
   def parse(argv) do
@@ -42,13 +43,14 @@ defmodule JiraClient.Args do
 
   defp new({parsed, args, []}) do
     {:ok, %JiraClient.Args{
-       command:       hd(args),
-       username:      parsed[:username],
-       password:      parsed[:password],
-       project:       parsed[:project],
-       issue:         parsed[:issue],
-       fix_version:   parsed[:fixVersion],
-       message:       parsed[:message]
+       command:           hd(args),
+       username:          parsed[:username],
+       password:          parsed[:password],
+       project:           parsed[:project],
+       issue:             parsed[:issue],
+       fix_version:       parsed[:fixVersion],
+       message:           parsed[:message],
+       close_transition:  parsed[:closed_transition]
     }}
   end
 
