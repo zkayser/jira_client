@@ -4,8 +4,8 @@ defmodule JiraClient.Api.CloseIssueRequestTest do
   alias JiraClient.Api.CloseIssueRequest
 
   test "Formats args" do
-    expected = ~s({"transitions": {"id": "5"}})
+    expected = ~s({"transitions":{"id":"5"}})
 
-    CloseIssueRequest.format(%Args{close_transition: "5"}) == expected
+    assert {:ok, expected} == CloseIssueRequest.format(%Args{close_transition: "5"})
   end
 end
