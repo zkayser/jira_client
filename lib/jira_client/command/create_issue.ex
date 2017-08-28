@@ -17,9 +17,6 @@ defmodule JiraClient.Command.CreateIssue do
          {:ok, issue}      <- create_issue(project_id, args.message, args.fix_version)
     do
       {:ok, "Created #{issue.issue_id}"}
-    else
-      {:error, error} -> {:error, error}
-      error -> error
     end
   end
 
@@ -29,8 +26,6 @@ defmodule JiraClient.Command.CreateIssue do
          {:ok, project}  <- select_project(project_name, projects)
     do
       {:ok, project.key}
-    else
-      message -> message
     end
   end
 
