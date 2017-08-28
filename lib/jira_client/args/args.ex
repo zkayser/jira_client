@@ -24,7 +24,7 @@ defmodule JiraClient.Args do
      command:          String.t,
      username:         String.t,
      password:         String.t,
-     project:          String.t,
+     project:          String.t, # project name
      issue:            String.t,
      fix_version:      String.t,
      message:          String.t,

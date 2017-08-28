@@ -7,19 +7,49 @@ defmodule JiraClient.Command.CreateIssue do
   alias JiraClient.Api.CreateIssueRequest, as: ApiCreateIssueRequest
   alias JiraClient.Api.CreateIssueResponse, as: ApiCreateIssueResponse
 
+  alias JiraClient.Api.Projects, as: ApiProjects
+  alias JiraClient.Api.ProjectsResponse, as: ApiProjectsResponse
+
   @behaviour JiraClient.Command
 
   def run(args) do
-    with request         <- ApiCreateIssueRequest.format(args),
-         {:ok, response} <- ApiCreateIssue.send(request),
-         {:ok, parsed}   <- ApiCreateIssueResponse.parse(response)
+    with {:ok, project_id} <- find_project(args.project),
+         {:ok, issue}      <- create_issue(project_id, args.message, args.fix_version)
     do
-      {:ok, "Created #{parsed.issue_id}"}
+      {:ok, "Created #{issue.issue_id}"}
     else
+      {:error, error} -> {:error, error}
       error -> error
     end
+  end
 
+  defp find_project(project_name) do
+    with {:ok, response} <- ApiProjects.send(%{}),
+         {:ok, projects} <- ApiProjectsResponse.parse(response),
+         {:ok, project}  <- select_project(project_name, projects)
+    do
+      {:ok, project.key}
+    else
+      message -> message
+    end
+  end
+
+  defp create_issue(project_id, message, fix_version) do
+    with request         <- ApiCreateIssueRequest.format(%{project_id: project_id, message: message, fix_version: fix_version}),
+         {:ok, response} <- ApiCreateIssue.send(request),
+         {:ok, issue}    <- ApiCreateIssueResponse.parse(response)
+    do
+      {:ok, issue}
+    else
+      error -> {:error, error}
+    end
+  end
+
+  defp select_project(project_name, projects) do
+    case Enum.find(projects, &(project_name == &1.name)) do
+      nil       -> {:error, "No project called '#{project_name}'"}
+      project   -> {:ok, project}
+    end
   end
 end
-
 
