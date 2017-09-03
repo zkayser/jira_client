@@ -3,12 +3,12 @@ defmodule JiraClient.Command.CreateIssue do
     Creates a JIRA issue related to a project, with a speciric fixVersion.
   """
 
-  alias JiraClient.Api.CreateIssue, as: ApiCreateIssue
-  alias JiraClient.Api.CreateIssueRequest, as: ApiCreateIssueRequest
+  alias JiraClient.Api.CreateIssue,         as: ApiCreateIssue
+  alias JiraClient.Api.CreateIssueRequest,  as: ApiCreateIssueRequest
   alias JiraClient.Api.CreateIssueResponse, as: ApiCreateIssueResponse
 
-  alias JiraClient.Api.Projects, as: ApiProjects
-  alias JiraClient.Api.ProjectsResponse, as: ApiProjectsResponse
+  alias JiraClient.Api.Projects,            as: ApiProjects
+  alias JiraClient.Api.ProjectsResponse,    as: ApiProjectsResponse
 
   @behaviour JiraClient.Command
 
