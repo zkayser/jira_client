@@ -5,7 +5,7 @@ defmodule JiraClient.Api.Projects do
   @behaviour JiraClient.Api.Sender
 
   def send(request) do
-    @request.new(:get, request, "rest/api/2/projects")
+    @request.new(:get, request, "rest/api/latest/project")
     |> @request.send
   end
 end

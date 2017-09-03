@@ -26,9 +26,16 @@ defmodule JiraClient.Http.Request do
 
   def send(%Request{headers: headers, body: {}, http_method: method} = req) do
     HTTPotion.request(method, url(req), [headers: headers])
+    |> logging
   end
 
   def send(%Request{headers: headers, body: body, http_method: method} = req) do
     HTTPotion.request(method, url(req), [body: body, headers: headers])
+    |> logging
+  end
+
+  defp logging(response) do
+    IO.inspect response
+    response
   end
 end
