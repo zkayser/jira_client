@@ -3,12 +3,12 @@ defmodule JiraClient.Command.CreateIssue do
     Creates a JIRA issue related to a project, with a speciric fixVersion.
   """
 
-  alias JiraClient.Api.CreateIssue,         as: ApiCreateIssue
-  alias JiraClient.Api.CreateIssueRequest,  as: ApiCreateIssueRequest
-  alias JiraClient.Api.CreateIssueResponse, as: ApiCreateIssueResponse
+  alias JiraClient.Api.CreateIssue,          as: ApiCreateIssue
+  alias JiraClient.Api.CreateIssueFormatter, as: ApiCreateIssueFormatter
+  alias JiraClient.Api.CreateIssueParser,    as: ApiCreateIssueParser
 
-  alias JiraClient.Api.Projects,            as: ApiProjects
-  alias JiraClient.Api.ProjectsResponse,    as: ApiProjectsResponse
+  alias JiraClient.Api.Projects,             as: ApiProjects
+  alias JiraClient.Api.ProjectsParser,       as: ApiProjectsParser
 
   @behaviour JiraClient.Command
 
@@ -22,7 +22,7 @@ defmodule JiraClient.Command.CreateIssue do
 
   defp find_project(project_name) do
     with {:ok, response} <- ApiProjects.send(%{}),
-         {:ok, projects} <- ApiProjectsResponse.parse(response),
+         {:ok, projects} <- ApiProjectsParser.parse(response),
          {:ok, project}  <- select_project(project_name, projects)
     do
       {:ok, project.key}
@@ -30,9 +30,9 @@ defmodule JiraClient.Command.CreateIssue do
   end
 
   defp create_issue(project_id, message, fix_version) do
-    with request         <- ApiCreateIssueRequest.format(%{project_id: project_id, message: message, fix_version: fix_version}),
+    with request         <- ApiCreateIssueFormatter.format(%{project_id: project_id, message: message, fix_version: fix_version}),
          {:ok, response} <- ApiCreateIssue.send(request),
-         {:ok, issue}    <- ApiCreateIssueResponse.parse(response)
+         {:ok, issue}    <- ApiCreateIssueParser.parse(response)
     do
       {:ok, issue}
     else

@@ -1,8 +1,8 @@
-defmodule JiraClient.Api.CreateIssueResponseTest do
+defmodule JiraClient.Api.CreateIssueParserTest do
   use ExUnit.Case
-  doctest JiraClient.Api.CreateIssueResponse
+  doctest JiraClient.Api.CreateIssueParser
 
-  alias JiraClient.Api.CreateIssueResponse
+  alias JiraClient.Api.CreateIssueParser
 
   test "parse response" do
     json = ~s({
@@ -11,7 +11,7 @@ defmodule JiraClient.Api.CreateIssueResponseTest do
         "self": "http://www.example.com/jira/rest/api/2/issue/10000"
     })
 
-    {:ok, response} = CreateIssueResponse.parse(json)
+    {:ok, response} = CreateIssueParser.parse(json)
 
     assert response.issue_id == "TST-24"
   end

@@ -41,7 +41,7 @@ defmodule JiraClient.Command do
   defp run_command(module, args) do
     try do
       # TODO why do i need an extra set of [] on the args in the apply?
-       apply(module, :run, [ args ])
+      apply(module, :run, [ args ])
     rescue
       ArgumentError -> {:error, "module doesn't exist: #{module}"}
     end

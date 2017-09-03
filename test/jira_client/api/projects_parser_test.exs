@@ -1,7 +1,7 @@
-defmodule JiraClient.Api.ProjectsRequestTest do
+defmodule JiraClient.Api.ProjectsParserTest do
   use ExUnit.Case
 
-  alias JiraClient.Api.ProjectsResponse
+  alias JiraClient.Api.ProjectsParser
 
   test "parse response 2 projec" do
     json = ~s([
@@ -43,17 +43,17 @@ defmodule JiraClient.Api.ProjectsRequestTest do
                 }
             ])
 
-    {:ok, response} = ProjectsResponse.parse(json)
+    {:ok, response} = ProjectsParser.parse(json)
 
     assert ["Example", "Alphabetical"] = Enum.map(response, fn (project) -> project.name end)
     assert ["EX", "ABC"] = Enum.map(response, fn (project) -> project.key end)
   end
 
   test "parse invalid json" do
-    {:error, "Invalid response: 'invalid, I 0'"} = ProjectsResponse.parse("INVALID_JSON")
+    {:error, "Invalid response: 'invalid, I 0'"} = ProjectsParser.parse("INVALID_JSON")
   end
 
   test "parse no projects" do
-    {:ok, []} = ProjectsResponse.parse("[]")
+    {:ok, []} = ProjectsParser.parse("[]")
   end
 end

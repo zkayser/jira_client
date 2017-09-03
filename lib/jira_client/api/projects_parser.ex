@@ -1,9 +1,9 @@
-defmodule JiraClient.Api.ProjectsResponse do
+defmodule JiraClient.Api.ProjectsParser do
   @moduledoc """
     Documentation: https://docs.atlassian.com/jira/REST/cloud/?_ga=2.164234879.1341041118.1503016110-979192388.1493054306#api/2/project-getAllProjects
   """
   
-  @behaviour JiraClient.Api.Response
+  @behaviour JiraClient.Api.Parser
 
   def parse(response) do
     parse_response Poison.Parser.parse(response)

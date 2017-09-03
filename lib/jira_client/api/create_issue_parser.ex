@@ -1,4 +1,4 @@
-defmodule JiraClient.Api.CreateIssueResponse do
+defmodule JiraClient.Api.CreateIssueParser do
   @moduledoc """
     {
         "id": "10000",
@@ -7,7 +7,7 @@ defmodule JiraClient.Api.CreateIssueResponse do
     }
   """
 
-  @behaviour JiraClient.Api.Response
+  @behaviour JiraClient.Api.Parser
 
   def parse(response) do
     parse_data Poison.Parser.parse(response)

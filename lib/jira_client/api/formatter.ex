@@ -1,4 +1,4 @@
-defmodule JiraClient.Api.Request do
+defmodule JiraClient.Api.Formatter do
   @moduledoc """
     Client for the JIRA REST API.
 

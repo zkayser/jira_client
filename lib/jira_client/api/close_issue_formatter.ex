@@ -1,4 +1,4 @@
-defmodule JiraClient.Api.CloseIssueRequest do
+defmodule JiraClient.Api.CloseIssueFormatter do
   @moduledoc """
   Documentation from https://docs.atlassian.com/jira/REST/cloud/#api/2/issue-doTransition
   {
@@ -50,7 +50,7 @@ defmodule JiraClient.Api.CloseIssueRequest do
     }
 }
   """
-  @behaviour JiraClient.Api.Request
+  @behaviour JiraClient.Api.Formatter
 
   def format(request) do
     Poison.encode(%{
