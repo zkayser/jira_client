@@ -20,7 +20,7 @@ defmodule JiraClient.Auth.Credentials do
   end
 
   def get(file \\ @cred_file_path) do
-    with true <- File.exists?(file),
+    with true <- FileUtils.creds_file_exists?(),
       {:ok, creds} <- File.read(file)
     do
       String.trim(creds)

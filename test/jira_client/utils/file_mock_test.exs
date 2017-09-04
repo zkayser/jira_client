@@ -23,5 +23,6 @@ defmodule JiraClient.Utils.FileMockTest do
     
     assert "contents" == FileMock.read(FileMock.cwd() <> "/path/file")
   end
+
 end
 
