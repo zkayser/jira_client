@@ -31,3 +31,4 @@ defmodule JiraClient.Auth.CredentialsMockTest do
     end
   end
 end
+

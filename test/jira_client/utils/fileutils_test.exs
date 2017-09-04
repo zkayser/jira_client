@@ -18,9 +18,10 @@ defmodule JiraClient.Utils.FileUtilsTest do
   test "write_credentials" do
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials("username:password")
+
     assert FileUtils.creds_file_exists?()
-    assert [{FileUtils.creds_dir(), 0o700}, {FileUtils.creds_file(), 0o600}] == Agent.get(FileMock, &Map.get(&1, "permissions"))
-    assert FileUtils.get_creds_file |> FileMock.read() == "username:password"
+    assert [{FileUtils.get_creds_dir(), 0o700}, {FileUtils.get_creds_file(), 0o600}] == Agent.get(FileMock, &Map.get(&1, "permissions"))
+    assert FileMock.read(FileUtils.get_creds_file()) == "username:password"
   end
 
   test "read credentials" do

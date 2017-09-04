@@ -13,26 +13,12 @@ defmodule JiraClient.Utils.FileMock do
     Agent.get(__MODULE__, fn state -> state end)
   end
 
-  def cd(path) when is_binary(path)  do
-    case Agent.get(__MODULE__, fn state -> path in Map.keys(state) end) do
-      true ->
-        Agent.update(__MODULE__, &Map.put(&1, "cwd", path))
-        :ok
-      _ -> {:error, :enoent}
-    end
-  end
-
   def mkdir(path) when is_binary(path) do
-    cwd = Agent.get(__MODULE__, &Map.get(&1, "cwd"))
-    new_dir = cwd <> "/" <> path
-    Agent.update(__MODULE__, &Map.put(&1, new_dir, ""))
+    Agent.update(__MODULE__, &Map.put(&1, path, ""))
   end
-
-  def cwd, do: Agent.get(__MODULE__, &Map.get(&1, "cwd"))
 
   def write(path, content) when is_binary(path) do
-    cwd = Agent.get(__MODULE__, &Map.get(&1, "cwd"))
-    Agent.update(__MODULE__, &Map.put(&1, cwd <> "/" <> path, content))
+    Agent.update(__MODULE__, &Map.put(&1, path, content))
   end
 
   def read(path) when is_binary(path) do
@@ -54,18 +40,9 @@ defmodule JiraClient.Utils.FileMock do
   end
 
   defp initialize do
-    {:ok, cwd} = File.cwd()
-    String.split(cwd, "/")
-    |> Enum.drop(1)
-    |> Enum.reduce([], &build_paths(&1, &2))
-    |> Enum.reduce(%{}, fn path, acc -> Map.put(acc, path, "") end)
-    |> Map.put("cwd", cwd)
+    %{}
     |> Map.put("permissions", [])
     |> Map.put(Path.expand("~"), "")
   end
-
-  defp build_paths(elem, []), do: ["/" <> elem]
-  defp build_paths(elem, [head|_] = list) do
-    [head <> "/" <> elem] ++ list
-  end
 end
+

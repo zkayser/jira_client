@@ -13,15 +13,15 @@ defmodule JiraClient.Utils.FileMockTest do
   end
 
   test "file exists" do
-    FileMock.write("path/file", "contents")
+    FileMock.write("/path/file", "contents")
 
-    assert FileMock.exists?(FileMock.cwd() <> "/path/file")
+    assert FileMock.exists?("/path/file")
   end
   
   test "file contents" do
-    FileMock.write("path/file", "contents")
+    FileMock.write("/path/file", "contents")
     
-    assert "contents" == FileMock.read(FileMock.cwd() <> "/path/file")
+    assert "contents" == FileMock.read("/path/file")
   end
 
 end
