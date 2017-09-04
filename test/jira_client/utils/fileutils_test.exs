@@ -23,5 +23,11 @@ defmodule JiraClient.Utils.FileUtilsTest do
     assert FileUtils.get_creds_file |> FileMock.read() == "username:password"
   end
 
+  test "read credentials" do
+    FileUtils.mkdir_for_credentials()
+    FileUtils.write_credentials("username:password")
+
+    assert {:ok, "username:password"} == FileUtils.read_credentials()
+  end
 end
 

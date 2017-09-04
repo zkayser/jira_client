@@ -22,12 +22,12 @@ defmodule JiraClient.Auth.CredentialsMockTest do
   describe "get" do
     test "returns encoded credentials when credentials exist" do
       Application.put_env(:jira_client, :test_creds, Base.encode64(@user_creds))
-      assert @credentials.get("fake/file/path").base64_encoded == Base.encode64(@user_creds)
+      assert @credentials.get().base64_encoded == Base.encode64(@user_creds)
     end
 
     test "prompts for username and password when credentials file does not exist" do
       Application.delete_env(:jira_client, :test_creds)
-      assert @credentials.get("fake/file/path").base64_encoded == Base.encode64(@user_creds)
+      assert @credentials.get().base64_encoded == Base.encode64(@user_creds)
     end
   end
 end

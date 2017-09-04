@@ -16,7 +16,7 @@ defmodule JiraClient.Auth.CredentialsMock do
     |> store()
   end
 
-  def get(_) do
+  def get() do
     if Application.get_env(:jira_client, :test_creds) do
       creds = Application.get_env(:jira_client, :test_creds)
       %Creds{base64_encoded: creds}

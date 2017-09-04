@@ -1,14 +1,13 @@
 defmodule JiraClient.Auth.Credentials do
-  @behaviour JiraClient.Credentials
-
-  alias JiraClient.Credentials, as: Creds
-  alias JiraClient.Utils.FileUtils
   @moduledoc """
   This module contains functions for authenticating with the Jira
   Api using basic authentication
   """
-  @base Path.expand("~")
-  @cred_file_path Path.join(@base, ".jira/credentials.txt")
+
+  @behaviour JiraClient.Credentials
+
+  alias JiraClient.Credentials, as: Creds
+  alias JiraClient.Utils.FileUtils
 
   def init(), do: build_credentials(nil)
   def init("", ""), do: build_credentials(nil)
@@ -19,9 +18,9 @@ defmodule JiraClient.Auth.Credentials do
     |> store()
   end
 
-  def get(file \\ @cred_file_path) do
+  def get() do
     with true <- FileUtils.creds_file_exists?(),
-      {:ok, creds} <- File.read(file)
+      {:ok, creds} <- FileUtils.read_credentials()
     do
       String.trim(creds)
     else

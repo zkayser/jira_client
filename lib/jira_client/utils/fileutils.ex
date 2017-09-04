@@ -22,6 +22,10 @@ defmodule JiraClient.Utils.FileUtils do
     @file_module.chmod(@creds_file, 0o600)
   end
 
+  def read_credentials() do
+    {:ok, @file_module.read(get_creds_file())}
+  end
+
   def creds_file_exists?(), do: get_creds_file() |> @file_module.exists?()
 
   def creds_dir_exists?(), do: get_creds_dir() |> @file_module.exists?()
@@ -35,3 +39,4 @@ defmodule JiraClient.Utils.FileUtils do
   def creds_file, do: @creds_file
   def creds_dir, do: @creds_dir
 end
+

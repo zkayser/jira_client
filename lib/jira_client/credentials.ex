@@ -8,7 +8,7 @@ defmodule JiraClient.Credentials do
   @doc """
   Returns a user's encoded credentials
   """
-  @callback get(location :: String.t | atom()) :: __MODULE__.t
+  @callback get() :: __MODULE__.t
 
   @doc """
   Stores a user's credentials
