@@ -9,6 +9,10 @@ defmodule JiraClient.Utils.FileMock do
     Agent.start_link(&initialize/0, name: __MODULE__)
   end
 
+  def du() do
+    Agent.get(__MODULE__, fn state -> state end)
+  end
+
   def cd(path) when is_binary(path)  do
     case Agent.get(__MODULE__, fn state -> path in Map.keys(state) end) do
       true ->

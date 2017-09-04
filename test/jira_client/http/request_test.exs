@@ -18,11 +18,11 @@ defmodule JiraClient.Http.RequestTest do
     assert req.path == @path
     assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Base.encode64("username:password")}"]
     assert req.body == body
-    assert req.base_url == System.get_env("JIRA_BASE_URL")
+    assert req.base_url == Application.get_env(:jira_client, :base_url)
   end
 
   test "request url", context do
     req = Request.new(:get, @example_body, @path, context[:creds_get_fn])
-    assert Request.url(req) == "#{System.get_env("JIRA_BASE_URL")}/#{@path}"
+    assert Request.url(req) == "#{Application.get_env(:jira_client, :base_url)}/#{@path}"
   end
 end
