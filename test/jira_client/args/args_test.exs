@@ -13,26 +13,22 @@ defmodule JiraClient.ArgsTest do
 
   describe "command configure" do
 
-    test "configure username and password" do
-      {:ok, args} = Args.parse(["configure", "--username", "fred", "--password", "secret"])
+    test "configure username" do
+      {:ok, args} = Args.parse(["configure", "--username", "fred"])
 
      assert args.command == "configure"
      assert args.username == "fred"
-     assert args.password == "secret"
     end
 
-    test "configure username short form and password" do
-      {:ok, args} = Args.parse(["configure", "-u", "fred", "--password", "secret"])
+    test "configure username short form" do
+      {:ok, args} = Args.parse(["configure", "-u", "fred"])
 
      assert args.command == "configure"
      assert args.username == "fred"
-     assert args.password == "secret"
     end
 
-    test "missing username and/or password" do
+    test "missing username" do
       {:error, "missing arguments for configure command"} = Args.parse(["configure"])
-      {:error, "missing arguments for configure command"} = Args.parse(["configure", "--password", "secret"])
-      {:error, "missing arguments for configure command"} = Args.parse(["configure", "--username", "fred"])
     end
   end
 

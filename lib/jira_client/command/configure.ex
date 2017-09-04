@@ -8,10 +8,16 @@ defmodule JiraClient.Command.Configure do
   @behaviour JiraClient.Command
 
   def run(args) do
+    run_with_password(args, fn -> 
+      IO.puts("Enter JIRA password: ")
+      :io.get_password()
+    end)
+  end
 
-    #args.password = :io.get_password
+  def run_with_password(args, password_getter) do
+    password = password_getter.()
 
-    Credentials.init(args.username, args.password)
+    Credentials.init(args.username, password)
     {:ok, "Configuration complete"}
   end
 end

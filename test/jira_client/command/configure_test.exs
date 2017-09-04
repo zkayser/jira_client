@@ -12,19 +12,15 @@ defmodule JiraClient.Command.ConfigureTest do
   end
 
   test "running configuration" do
-    {:ok, result} = Configure.run(%Args{username: "fred", password: "secret"})
+    {:ok, result} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret" end)
 
     assert result == "Configuration complete"
   end
 
-  @tag :skip
   test "read password from stdin" do
-    {:ok, _} = Configure.run(%Args{username: "fred"})
+    {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret" end)
 
-    IO.puts(">>>> #{FileUtils.get_creds_file()}")
-    IO.puts(">>>> #{FileUtils.get()}")
-
-    assert FileMock.exists?(FileUtils.get_creds_file())
+    assert {:ok, Base.encode64("fred:secret")} == FileUtils.read_credentials()
   end
 end
 
