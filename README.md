@@ -12,7 +12,7 @@ Usage:
 Create a config file in your home dir (.jira/credentials.txt) to hold your jira credenitals.
 
 ```bash
-jira_client configure --username <jira username> --password <jira password>
+jira_client configure --username <jira username>
 ```
 
 Create an issue.
@@ -72,6 +72,6 @@ $ go home.
 
 Generate the executable
 
-> mix escript.build
+> MIX_ENV=prod mix escript.build
 
 
