@@ -3,13 +3,13 @@ defmodule JiraClient.Api.SenderTest do
 
   defmodule SenderTestFake do
     @behaviour JiraClient.Api.Sender
-    def send(request) do
-      {:ok, %{value: request}}
+    def send(attributes, body) do
+      {:ok, attributes, %{body: body}}
     end
   end
   
   test "implements callback" do
-    assert {:ok, %{value: "request"}} == SenderTestFake.send("request")
+    assert {:ok, %{attribute: 123}, %{body: "name=value"}} == SenderTestFake.send(%{attribute: 123}, "name=value")
   end
 end
 

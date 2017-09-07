@@ -1,4 +1,4 @@
 defmodule JiraClient.Api.Sender do
-  @callback send(String.t) :: {Atom, %{}}
+  @callback send(Map.t, String.t) :: {Atom, %{}}
 end
 

@@ -8,8 +8,8 @@ defmodule JiraClient.Api.CloseIssue do
 
   @behaviour JiraClient.Api.Sender
 
-  def send(request) do
-    @request.new(:post, request, "/rest/api/latest/issue/#{request.id}/transitions")
+  def send(attributes, body) do
+    @request.new(:post, body, "/rest/api/latest/issue/#{attributes.id}/transitions")
     |> @request.send()
   end
 end

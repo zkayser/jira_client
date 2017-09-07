@@ -12,7 +12,7 @@ defmodule JiraClient.Api.CreateIssueTest do
   test "send request" do
     RequestFake.expect_response(~s(echo some request))
 
-    {:ok, response} = CreateIssue.send("some request")
+    {:ok, response} = CreateIssue.send(%{}, "some request")
 
     assert "echo some request" == response
   end

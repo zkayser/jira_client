@@ -14,7 +14,7 @@ defmodule JiraClient.Api.CloseIssueTest do
   test "send request" do
     RequestFake.expect_response(~s(some response))
 
-    {:ok, response} = CloseIssue.send("some request")
+    {:ok, response} = CloseIssue.send(%{id: 123}, "some request")
 
     assert "some response" == response
   end

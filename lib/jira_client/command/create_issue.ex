@@ -21,7 +21,7 @@ defmodule JiraClient.Command.CreateIssue do
   end
 
   defp find_project(project_name) do
-    with {:ok, response} <- ApiProjects.send(%{}),
+    with {:ok, response} <- ApiProjects.send(%{}, ""),
          {:ok, projects} <- ApiProjectsParser.parse(response),
          {:ok, project}  <- select_project(project_name, projects)
     do
@@ -31,7 +31,7 @@ defmodule JiraClient.Command.CreateIssue do
 
   defp create_issue(project_id, message, fix_version) do
     with request         <- ApiCreateIssueFormatter.format(%{project_id: project_id, message: message, fix_version: fix_version}),
-         {:ok, response} <- ApiCreateIssue.send(request),
+         {:ok, response} <- ApiCreateIssue.send(%{}, request),
          {:ok, issue}    <- ApiCreateIssueParser.parse(response)
     do
       {:ok, issue}
