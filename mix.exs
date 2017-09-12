@@ -8,6 +8,7 @@ defmodule JiraClient.Mixfile do
      escript: [
        main_module: JiraClient,
        name: "bin/jira_client",
+       strip_beam: false,
      ],
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
