@@ -7,7 +7,7 @@ defmodule JiraClient.Api.CreateIssue do
 
   @behaviour JiraClient.Api.Sender
 
-  def send(attributes, body) do
+  def send(_, body) do
     @request.new(:post, body, "rest/api/latest/issue")
     |> @request.send
   end
