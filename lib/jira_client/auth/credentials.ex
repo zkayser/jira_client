@@ -11,7 +11,7 @@ defmodule JiraClient.Auth.Credentials do
 
   def init(), do: build_credentials(nil)
   def init("", ""), do: build_credentials(nil)
-  def init(_, {:error, _}), do: IO.puts "Screwed"
+  def init(_, {:error, _}), do: build_credentials(nil)
   def init(username, pass) do
     "#{username}:#{pass}"
     |> Base.encode64()

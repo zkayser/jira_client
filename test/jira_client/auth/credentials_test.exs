@@ -22,5 +22,22 @@ defmodule JiraClient.Auth.CredentialsTest do
 
     assert "username:password" == Credentials.get() 
   end
+
+  test "init with no credentials" do
+    assert %JiraClient.Credentials{errors: ["Credentials not provided"]} == Credentials.init()
+  end
+
+  test "init with an error passed in" do
+    assert %JiraClient.Credentials{errors: ["Credentials not provided"]} == Credentials.init(:any, {:error, "message"})
+  end
+
+  test "init with empty strings" do
+    assert %JiraClient.Credentials{errors: ["Credentials not provided"]} == Credentials.init("", "")
+  end
+  
+  test "init with good username and password" do
+    assert %JiraClient.Credentials{base64_encoded: "dXNlcm5hbWU6cGFzc3dvcmQ="} == Credentials.init("username", "password")
+  end
+  
 end
 
