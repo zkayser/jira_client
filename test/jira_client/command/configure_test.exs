@@ -17,6 +17,12 @@ defmodule JiraClient.Command.ConfigureTest do
     assert result == "Configuration complete"
   end
 
+  test "configure with password with no carriage return line feed" do
+    {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret\r\n" end)
+
+    assert {:ok, "ZnJlZDpzZWNyZXQ="} == FileUtils.read_credentials()
+  end
+
   test "read password from stdin" do
     {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret" end)
 

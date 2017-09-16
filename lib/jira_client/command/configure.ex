@@ -14,13 +14,13 @@ defmodule JiraClient.Command.Configure do
   end
 
   def run_with_password(args, password_getter) do
-    password = password_getter.()
+    password = String.trim password_getter.()
 
     Credentials.init(args.username, password)
     {:ok, "Configuration complete"}
   end
 
-    # Password prompt that hides input by every 1ms
+  # Password prompt that hides input by every 1ms
   # clearing the line with stderr
   def password_get(prompt, false) do
     IO.gets(prompt <> " ")
@@ -30,9 +30,11 @@ defmodule JiraClient.Command.Configure do
     ref   = make_ref()
     value = IO.gets(prompt <> " ")
 
+
     send pid, {:done, self(), ref}
     receive do: ({:done, ^pid, ^ref}  -> :ok)
 
+    #String.trim(value)
     value
   end
 

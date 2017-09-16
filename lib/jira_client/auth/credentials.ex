@@ -13,8 +13,7 @@ defmodule JiraClient.Auth.Credentials do
   def init("", ""), do: build_credentials(nil)
   def init(_, {:error, _}), do: build_credentials(nil)
   def init(username, pass) do
-    "#{username}:#{pass}"
-    |> Base.encode64()
+    encode(username, pass)
     |> build_credentials()
     |> store()
   end
@@ -43,6 +42,11 @@ defmodule JiraClient.Auth.Credentials do
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials(encoded)
     creds
+  end
+
+  def encode(username, pass) do
+    "#{username}:#{pass}"
+    |> Base.encode64()
   end
 
   defp build_credentials(nil), do: %Creds{errors: ["Credentials not provided"]}
