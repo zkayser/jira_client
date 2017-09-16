@@ -30,6 +30,7 @@ defmodule JiraClient.Http.Request do
   end
 
   def send(%Request{headers: headers, body: body, http_method: method} = req) do
+    IO.inspect headers
     HTTPotion.request(method, url(req), [body: body, headers: headers])
     |> logging
   end
