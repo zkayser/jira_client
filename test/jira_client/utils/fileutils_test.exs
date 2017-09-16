@@ -21,7 +21,7 @@ defmodule JiraClient.Utils.FileUtilsTest do
 
     assert FileUtils.creds_file_exists?()
     assert [{FileUtils.get_creds_dir(), 0o700}, {FileUtils.get_creds_file(), 0o600}] == Agent.get(FileMock, &Map.get(&1, "permissions"))
-    assert FileMock.read(FileUtils.get_creds_file()) == "username:password"
+    assert FileMock.read(FileUtils.get_creds_file()) == {:ok, "username:password"}
   end
 
   test "read credentials" do

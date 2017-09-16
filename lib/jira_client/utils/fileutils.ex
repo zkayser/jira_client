@@ -19,7 +19,7 @@ defmodule JiraClient.Utils.FileUtils do
   end
 
   def read_credentials() do
-    {:ok, @file_module.read(get_creds_file())}
+    @file_module.read(get_creds_file())
   end
 
   def creds_dir_exists?(),  do: @file_module.exists?(get_creds_dir())

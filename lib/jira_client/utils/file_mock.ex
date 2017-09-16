@@ -22,7 +22,7 @@ defmodule JiraClient.Utils.FileMock do
   end
 
   def read(path) when is_binary(path) do
-    Agent.get(__MODULE__, &Map.get(&1, path))
+    {:ok, Agent.get(__MODULE__, &Map.get(&1, path))}
   end
 
   def exists?(path) when is_binary(path) do

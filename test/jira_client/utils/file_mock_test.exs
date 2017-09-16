@@ -21,7 +21,7 @@ defmodule JiraClient.Utils.FileMockTest do
   test "file contents" do
     FileMock.write("/path/file", "contents")
     
-    assert "contents" == FileMock.read("/path/file")
+    assert {:ok, "contents"} == FileMock.read("/path/file")
   end
 
 end
