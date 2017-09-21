@@ -3,6 +3,7 @@ defimpl String.Chars, for: JiraClient.Http.Request do
     method = request.http_method |> Kernel.to_string |> String.upcase
 
     ~s(
+    REQUEST:
     #{method} #{request.path}
     #{header(request, "Content-Type")}
     #{header(request, "Authorization")}
@@ -13,6 +14,23 @@ defimpl String.Chars, for: JiraClient.Http.Request do
 
   defp header(request, name) do
     "#{name}: #{request.headers[String.to_atom(name)]}"
+  end
+end
+
+defimpl String.Chars, for: HTTPotion.Response do
+  def to_string(response) do
+    ~s(
+    RESPONSE:
+    HTTP\/1.1 200 OK
+    #{header(response, "Date")}
+    #{header(response, "Connection")}
+    #{header(response, "Server")}
+    #{header(response, "Content-Type")}
+    )
+  end
+
+  defp header(response, name) do
+    "#{name}: #{response.headers.hdrs[String.downcase(name)]}"
   end
 end
 
@@ -48,13 +66,13 @@ defmodule JiraClient.Http.Request do
   end
 
   def send(%Request{headers: headers, body: body, http_method: method} = req) do
-    IO.inspect headers
+    IO.puts headers
     HTTPotion.request(method, url(req), [body: body, headers: headers])
     |> logging
   end
 
   defp logging(response) do
-    IO.inspect response
+    IO.puts response
     response
   end
 end
