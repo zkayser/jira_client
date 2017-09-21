@@ -18,10 +18,10 @@ defmodule JiraClient do
         IO.puts message
         0
       {:error, message} -> 
-        IO.puts "ERROR: #{message}"
+        IO.puts "ERROR (known): #{message}"
         1
       message ->
-        IO.puts "ERROR: #{inspect message}"
+        IO.puts "ERROR (unknown): #{inspect message}"
         2
     end
   end
