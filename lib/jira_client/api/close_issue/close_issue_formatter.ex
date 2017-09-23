@@ -60,3 +60,4 @@ defmodule JiraClient.Api.CloseIssueFormatter do
     })
   end
 end
+

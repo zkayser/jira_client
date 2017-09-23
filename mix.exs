@@ -35,7 +35,8 @@ defmodule JiraClient.Mixfile do
   defp deps do
     [
       {:httpotion, "~> 3.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 end

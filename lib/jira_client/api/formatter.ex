@@ -8,5 +8,5 @@ defmodule JiraClient.Api.Formatter do
   @doc """
     Allow an arbitrary set of parameters to be formatted into a json string.
   """
-  @callback format(Map.t) :: String.t
+  @callback format(Map.t) :: {Atom.t, String.t}
 end
