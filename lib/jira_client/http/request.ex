@@ -36,7 +36,7 @@ defmodule JiraClient.Http.Request do
     |> logging
   end
 
-  defp logging([_]) do
+  defp logging([_|_]) do
     # Ignore the login request.
   end
 
