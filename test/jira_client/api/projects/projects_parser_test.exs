@@ -43,17 +43,17 @@ defmodule JiraClient.Api.ProjectsParserTest do
                 }
             ])
 
-    {:ok, response} = ProjectsParser.parse(json)
+    {:ok, response} = ProjectsParser.parse(%HTTPotion.Response{body: json})
 
     assert ["Example", "Alphabetical"] = Enum.map(response, fn (project) -> project.name end)
     assert ["EX", "ABC"] = Enum.map(response, fn (project) -> project.key end)
   end
 
   test "parse invalid json" do
-    {:error, "Invalid response: 'invalid, I 0'"} = ProjectsParser.parse("INVALID_JSON")
+    {:error, "Invalid response: 'invalid, I 0'"} = ProjectsParser.parse(%HTTPotion.Response{body: "INVALID_JSON"})
   end
 
   test "parse no projects" do
-    {:ok, []} = ProjectsParser.parse("[]")
+    {:ok, []} = ProjectsParser.parse(%HTTPotion.Response{body: "[]"})
   end
 end

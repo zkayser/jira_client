@@ -25,24 +25,20 @@ defmodule JiraClient.Http.Request do
   end
 
   def send(%Request{headers: headers, body: {}, http_method: method} = req) do
-    logging(headers)
+    logging(req)
     HTTPotion.request(method, url(req), [headers: headers])
     |> logging
   end
 
   def send(%Request{headers: headers, body: body, http_method: method} = req) do
-    logging(headers)
+    logging(req)
     HTTPotion.request(method, url(req), [body: body, headers: headers])
     |> logging
   end
 
-  defp logging([_|_]) do
-    # Ignore the login request.
-  end
-
-  defp logging(response) do
-    IO.puts response
-    response
+  defp logging(message) do
+    IO.puts message
+    message
   end
 end
 

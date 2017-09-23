@@ -14,7 +14,7 @@ defmodule JiraClient.Command.CreateIssueTest do
   describe "Success" do
 
     test "create issue" do
-      RequestFake.expect_response(~s(
+      RequestFake.expect_response(%HTTPotion.Response{body: ~s(
         [
           {
             "self": "http://www.example.com/jira/rest/api/2/project/EX",
@@ -34,16 +34,16 @@ defmodule JiraClient.Command.CreateIssueTest do
               "description": "First Project Category"
             }
           }
-        ]))
+        ])})
 
-      RequestFake.expect_response(~s(
+      RequestFake.expect_response(%HTTPotion.Response{body: ~s(
         {
           "id": "10000",
           "key": "ISSUE-123",
           "self": "http://www.example.com/jira/rest/api/2/issue/10000"
-        }))
+        })})
 
-        {:ok, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
+      {:ok, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
 
       assert "Created ISSUE-123" == message
     end
@@ -52,23 +52,23 @@ defmodule JiraClient.Command.CreateIssueTest do
   describe "failures" do
 
     test "no such project" do
-      RequestFake.expect_response(~s(
+      RequestFake.expect_response(%HTTPotion.Response{body: ~s(
         [
           {
             "key": "PROJECT-123",
             "name": "NO SUCH PROJECT"
           }
-        ]))
+        ])})
 
-        {:error, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
+      {:error, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
 
       assert "No project called 'Example'" == message
     end
 
     test "invalid jspn" do
-      RequestFake.expect_response(~s(INVALID))
+      RequestFake.expect_response(%HTTPotion.Response{body: ~s(INVALID)})
 
-        {:error, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
+      {:error, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
 
       assert "Invalid response: 'invalid, I 0'" == message
     end

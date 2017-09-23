@@ -9,8 +9,8 @@ defmodule JiraClient.Api.CreateIssueParser do
 
   @behaviour JiraClient.Api.Parser
 
-  def parse(response) do
-    parse_data Poison.Parser.parse(response)
+  def parse(%HTTPotion.Response{body: body}) do
+    parse_data Poison.Parser.parse(body)
   end
 
   defp parse_data({:ok, data}) do

@@ -30,7 +30,7 @@ defmodule JiraClientTest do
     end)
 
     assert Regex.match?(~r/Welcome to Jira Client/, output), "Output doesn't match expected text: '#{output}'"
-    assert Regex.match?(~r/ERROR: invalid command: 'invalid'/, output), "Output doesn't match expected text: '#{output}'"
+    assert Regex.match?(~r/WARN: invalid command: 'invalid'/, output), "Output doesn't match expected text: '#{output}'"
   end
 
 end

@@ -5,8 +5,8 @@ defmodule JiraClient.Api.ProjectsParser do
   
   @behaviour JiraClient.Api.Parser
 
-  def parse(response) do
-    parse_response Poison.Parser.parse(response)
+  def parse(%HTTPotion.Response{body: body}) do
+    parse_response Poison.Parser.parse(body)
   end
 
   defp parse_response({:ok, project_list}) do

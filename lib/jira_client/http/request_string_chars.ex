@@ -17,7 +17,7 @@ defimpl String.Chars, for: JiraClient.Http.Request do
 
   defp format_headers([], text), do: text
   defp format_headers([{name, value}|other_headers], text) do
-    format_headers(other_headers, text <> "#{name}: #{value}\r\n")
+    format_headers(other_headers, text <> "#{name}: #{value}\r\n    ")
   end
 end
 

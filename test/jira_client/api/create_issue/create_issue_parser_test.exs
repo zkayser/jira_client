@@ -11,7 +11,7 @@ defmodule JiraClient.Api.CreateIssueParserTest do
         "self": "http://www.example.com/jira/rest/api/2/issue/10000"
     })
 
-    {:ok, response} = CreateIssueParser.parse(json)
+    {:ok, response} = CreateIssueParser.parse(%HTTPotion.Response{body: json})
 
     assert response.issue_id == "TST-24"
   end

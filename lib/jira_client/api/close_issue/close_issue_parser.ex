@@ -7,8 +7,9 @@ defmodule JiraClient.Api.CloseIssueParser do
   end
 
   defp parse_data({:ok, data}) do
-    {:ok, %{
-      issue_id: data["key"]
+    {:ok, 
+      %{
+        issue_id: data["key"]
       }
     }
   end
