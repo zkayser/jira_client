@@ -4,6 +4,8 @@ defimpl String.Chars, for: HTTPotion.Response do
     RESPONSE:
     HTTP\/1.1 200 OK
     #{headers(response.headers.hdrs)}
+
+    #{response.body}
     )
   end
 

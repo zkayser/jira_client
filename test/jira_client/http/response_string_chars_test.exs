@@ -43,6 +43,7 @@ defmodule HTTPotion.Response.String.CharsTest do
     assert Regex.match?(~r/Connection: keep-alive/, output)                        , "No match: '#{output}'"
     assert Regex.match?(~r/Server: Atlassian Proxy\/0.1.114/, output)              , "No match: '#{output}'"
     assert Regex.match?(~r/Content-Type: application\/json;charset=UTF-8/, output) , "No match: '#{output}'"
+    assert Regex.match?(~r/"expand":"description/, output) , "No match: '#{output}'"
   end
  
 
