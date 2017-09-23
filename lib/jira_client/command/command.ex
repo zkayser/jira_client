@@ -39,11 +39,9 @@ defmodule JiraClient.Command do
   end
 
   defp run_command(module, args) do
-    try do
-      # TODO why do i need an extra set of [] on the args in the apply?
-      apply(module, :run, [ args ])
-    rescue
-      error -> {:error, "module doesn't exist: #{module} : #{inspect System.stacktrace()}"}
+    case Keyword.has_key?(module.__info__(:functions), :run) do
+      true -> apply(module, :run, [ args ])
+      false -> {:error, "module doesn't exist: #{module} : #{inspect System.stacktrace()}"}
     end
   end
 end
