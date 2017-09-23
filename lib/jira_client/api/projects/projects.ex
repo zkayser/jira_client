@@ -8,6 +8,7 @@ defmodule JiraClient.Api.Projects do
     response = @request.new(:get, body, "rest/api/latest/project")
     |> @request.send
 
-    response
+    {:ok, response}
   end
 end
+

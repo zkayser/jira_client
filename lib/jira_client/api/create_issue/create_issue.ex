@@ -11,6 +11,6 @@ defmodule JiraClient.Api.CreateIssue do
     response = @request.new(:post, body, "rest/api/latest/issue")
     |> @request.send
 
-    response
+    {:ok, response}
   end
 end

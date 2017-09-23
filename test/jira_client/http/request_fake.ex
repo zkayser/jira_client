@@ -25,6 +25,8 @@ defmodule JiraClient.Http.RequestFake do
       end)
   end
 
+  # TODO this is a 2 message sequence to a single threaded process which could
+  # result in a race condition if mutlople tests are running.
   def next_response() do
     next_response = Agent.get(__MODULE__, fn responses -> 
         case responses do
@@ -53,9 +55,7 @@ defmodule JiraClient.Http.RequestFake do
   end
 
   def send(_) do
-    next_response = next_response()
-
-    {:ok, next_response}
+    next_response()
   end
 end
 
