@@ -14,7 +14,9 @@ defmodule JiraClient.Http.RequestTest do
 
   test "Request.new", context do
     req = Request.new(:get, @example_body, @path, context[:creds_get_fn])
-    {:ok, body} = Poison.encode(@example_body)
+
+    body = @example_body
+
     assert req.http_method == :get
     assert req.path == @path
     assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Base.encode64("username:password")}"]
