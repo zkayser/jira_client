@@ -28,5 +28,14 @@ defmodule JiraClient.Http.Request.String.CharsTest do
     refute Regex.match?(~r/Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=/, output) , "Should not have matched"
   end
 
+  test "make it clear when thre is no body being posted.", context do
+    output = capture_io fn ->
+      request = JiraClient.Http.Request.new(:get, "", "http://a/b", context[:creds_get_fn])
+      IO.puts(request)
+    end
+
+    assert Regex.match?(~r/NO BODY/, output) , "Should have indicated that there was no body"
+  end
+
 end
 
