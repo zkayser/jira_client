@@ -51,6 +51,24 @@ defmodule JiraClient.Api.ProjectVersionsParserTest do
     assert version.project_id == 123
   end
 
+  test "parse response with no release date" do
+    json = ~s([
+      {
+         "id": "20000",
+         "description": "Another excellent version",
+         "name": "New Version 2",
+         "archived": true,
+         "projectId": 123
+      }
+    ])
+
+
+    {:ok, response} = ProjectVersionsParser.parse(%HTTPotion.Response{body: json})
+
+    version = List.first(response)
+    assert version.release_date == ""
+  end
+
   test "if there are no versions created for the project" do
     json = ~s([])
  

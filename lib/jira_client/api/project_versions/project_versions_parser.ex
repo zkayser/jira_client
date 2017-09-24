@@ -13,7 +13,7 @@ defmodule JiraClient.Api.ProjectVersionsParser do
           description:  version["description"],
           name:         version["name"],
           released:     version["released"],
-          release_date: parse_date(Date.from_iso8601(version["releaseDate"])),
+          release_date: parse_date(version["releaseDate"]),
           archived:     version["archived"],
           project_id:   version["projectId"]
         }
@@ -21,7 +21,12 @@ defmodule JiraClient.Api.ProjectVersionsParser do
     }
   end
 
+  defp parse_date(nil),            do: ""
   defp parse_date({:ok,    date}), do: date
   defp parse_date({:error, _}),    do: ""
+  defp parse_date(date) do 
+    parse_date(Date.from_iso8601(date))
+  end
+
 end
 
