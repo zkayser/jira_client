@@ -5,7 +5,7 @@ defimpl String.Chars, for: HTTPotion.Response do
     HTTP\/1.1 200 OK
     #{headers(response.headers.hdrs)}
 
-    #{response.body}
+    #{format_body(response.body)}
     )
   end
 
@@ -19,6 +19,13 @@ defimpl String.Chars, for: HTTPotion.Response do
     String.split(name, "-")
     |> Enum.map(fn(part) -> String.capitalize(part) end)
     |> Enum.join("-")
+  end
+
+  defp format_body("") do
+    "NO BODY"
+  end
+  defp format_body(body) do
+    body
   end
 end
 

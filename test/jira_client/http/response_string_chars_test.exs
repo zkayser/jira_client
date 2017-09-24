@@ -3,10 +3,6 @@ defmodule HTTPotion.Response.String.CharsTest do
 
   import ExUnit.CaptureIO
 
-  #     (stdlib) :io.put_chars(:standard_io, :unicode, 
-          #[["Content-Type": "application/json", Authorization: "Basic ZWR3YXJkLnN1bWVyZmllbGRAcGx4aXMuY29tOnU3IzhuMzRB"], 10]
-        #)
-
   test "output pretty response" do
     response = %HTTPotion.Response{
       body: "[{\"expand\":\"description,lead,issueTypes,url,projectKeys\" ...",
@@ -45,7 +41,25 @@ defmodule HTTPotion.Response.String.CharsTest do
     assert Regex.match?(~r/Content-Type: application\/json;charset=UTF-8/, output) , "No match: '#{output}'"
     assert Regex.match?(~r/"expand":"description/, output) , "No match: '#{output}'"
   end
- 
+
+
+  test "show that ther eis no body in response" do
+    response = %HTTPotion.Response{
+      body: "",
+      headers: %HTTPotion.Headers{
+        hdrs: %{
+          "something" => "some value",
+        }
+      },
+      status_code: 200
+    }
+
+    output = capture_io fn ->
+      IO.puts(response)
+    end
+
+    assert Regex.match?(~r/NO BODY/, output) , "No match: '#{output}'"
+  end
 
 end
 

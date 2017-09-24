@@ -16,10 +16,17 @@ defmodule JiraClient.Http.Request.String.CharsTest do
     assert Regex.match?(~r/REQUEST:/, output)                                      , "No match: '#{output}'"
     assert Regex.match?(~r/GET http:\/\/a\/b/, output)                             , "No match: '#{output}'"
     assert Regex.match?(~r/Content-Type: application\/json/, output)               , "No match: '#{output}'"
-    assert Regex.match?(~r/Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=/, output) , "No match: '#{output}'"
     assert Regex.match?(~r/REQUEST BODY/, output)                                  , "No match: '#{output}'"
   end
 
+  test "ensure that the Authorization information is not printed", context do
+    output = capture_io fn ->
+      request = JiraClient.Http.Request.new(:get, "REQUEST BODY", "http://a/b", context[:creds_get_fn])
+      IO.puts(request)
+    end
+
+    refute Regex.match?(~r/Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=/, output) , "Should not have matched"
+  end
 
 end
 
