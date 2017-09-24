@@ -21,9 +21,7 @@ defimpl String.Chars, for: HTTPotion.Response do
     |> Enum.join("-")
   end
 
-  defp format_body("") do
-    "NO BODY"
-  end
+  defp format_body(""), do: "NO BODY"
   defp format_body(body) do
     body
   end

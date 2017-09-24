@@ -21,9 +21,7 @@ defimpl String.Chars, for: JiraClient.Http.Request do
     format_headers(other_headers, text <> "#{name}: #{value}\r\n    ")
   end
 
-  defp format_body("") do
-    "NO BODY"
-  end
+  defp format_body(""), do: "NO BODY"
   defp format_body(body) do
     body
   end
