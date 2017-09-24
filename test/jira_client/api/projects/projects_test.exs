@@ -13,6 +13,7 @@ defmodule JiraClient.Api.ProjectsTest do
 
     {:ok, response} = Projects.send(%{}, "some request")
 
+    assert {:get, "some request", "rest/api/latest/project"} == RequestFake.next_request()
     assert "echo some request" == response
   end
 end

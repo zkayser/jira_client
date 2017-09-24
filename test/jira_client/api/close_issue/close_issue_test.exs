@@ -9,13 +9,12 @@ defmodule JiraClient.Api.CloseIssueTest do
     RequestFake.init()
   end
 
-  # TODO The send breaks that Sender calling convension. We propbably need to refactor to a url and a body interface.
-  @tag :skip
   test "send request" do
     RequestFake.expect_response(~s(some response))
 
     {:ok, response} = CloseIssue.send(%{id: 123}, "some request")
 
+    assert {:post, "some request", "/rest/api/latest/issue/123/transitions"} == RequestFake.next_request()
     assert "some response" == response
   end
 end
