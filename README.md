@@ -7,7 +7,17 @@ A **Jira** command line client that allows developers to work with the issue tra
 while developing code. Specifically addresses the problem of including a **Jira** issue
 number in a commit message.
 
-Usage:
+## Installation
+
+Generate the executable
+
+> MIX_ENV=prod mix escript.build
+
+Generates the command
+
+> bin/jira_client
+
+## Usage
 
 Create a config file in your home dir (.jira/credentials.txt) to hold your jira credenitals.
 
@@ -18,7 +28,7 @@ jira_client configure --username <jira username>
 Create an issue.
 
 ```bash
-$ jira_client create_issue -m "change code to make it better" -p "Project Name" -m "Fix Version"
+$ jira_client create_issue -m "change code to make it better" -p "Project Name"
 Issue created: XXX-123
 ```
 
@@ -67,11 +77,5 @@ $ vi ...
 $ track_change "refactor more bad code to make it good"
 $ go home.
 ```
-
-## Installation
-
-Generate the executable
-
-> MIX_ENV=prod mix escript.build
 
 
