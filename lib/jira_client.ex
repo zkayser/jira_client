@@ -14,7 +14,7 @@ defmodule JiraClient do
   def main_client(args) do
     IO.puts("Welcome to Jira Client")
 
-    case run Args.parse(args) do
+    case Args.parse(args) |> run do
       {:ok, message} -> 
         IO.puts message
         0
