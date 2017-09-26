@@ -11,6 +11,26 @@ defmodule JiraClient.ArgsTest do
     end
   end
 
+  describe "http logging" do
+    test "enable" do
+      {:ok, args} = Args.parse(["create_issue", "-p", "project", "-m", "message", "--logging"])
+
+      assert args.logging == true
+    end
+
+    test "intentionally disabled" do
+      {:ok, args} = Args.parse(["create_issue", "-p", "project", "-m", "message", "--no-logging"])
+
+      assert args.logging == false
+    end
+
+    test "disabled" do
+      {:ok, args} = Args.parse(["create_issue", "-p", "project", "-m", "message"])
+
+      assert args.logging == false
+    end
+  end
+
   describe "command configure" do
 
     test "configure username" do

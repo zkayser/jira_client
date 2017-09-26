@@ -3,23 +3,23 @@ defmodule JiraClient.Args do
   # Definition of all commands accepted by jira client
   @commands %{
     "help"      => %{
-      args:   [],
-      aliases: [],
+      args:      [],
+      aliases:   [],
       mandatory: []
     },
     "configure" => %{
-      args: [username: :string],
-      aliases: [u: :username],
+      args:      [username: :string],
+      aliases:   [u: :username],
       mandatory: [:username]
     },
     "create_issue" => %{
-      args: [project: :string, message: :string, fixVersion: :string],
-      aliases: [m: :message, p: :project, f: :fixVersion],
+      args:      [project: :string, message: :string, fixVersion: :string, logging: :boolean],
+      aliases:   [m: :message, p: :project, f: :fixVersion, l: :logging],
       mandatory: [:project, :message]
     },
     "close_issue" =>  %{
-      args: [issue: :string],
-      aliases: [i: :issue],
+      args:      [issue: :string, logging: :boolean],
+      aliases:   [i: :issue, l: :logging],
       mandatory: [:issue]
     }
   }
@@ -31,9 +31,10 @@ defmodule JiraClient.Args do
      issue:            String.t,
      fix_version:      String.t,
      message:          String.t,
-     close_transition: String.t
+     close_transition: String.t,
+     logging:          Boolean.t
   }
-  defstruct command: "", username: "", project: "", issue: "", fix_version: "", message: "", close_transition: ""
+  defstruct command: "", username: "", project: "", issue: "", fix_version: "", message: "", close_transition: "", logging: false
 
   @spec parse(String.t) :: {Atom.t, JiraClient.Args.t}
   def parse(argv) do
@@ -52,7 +53,8 @@ defmodule JiraClient.Args do
        issue:             parsed[:issue],
        fix_version:       parsed[:fixVersion],
        message:           parsed[:message],
-       close_transition:  parsed[:closed_transition]
+       close_transition:  parsed[:closed_transition],
+       logging:           (if (parsed[:logging]), do: true, else: false)
     }}
   end
 
