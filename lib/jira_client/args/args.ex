@@ -54,7 +54,7 @@ defmodule JiraClient.Args do
        fix_version:       parsed[:fixVersion],
        message:           parsed[:message],
        close_transition:  parsed[:closed_transition],
-       logging:           (if (parsed[:logging]), do: true, else: false)
+       logging:           !!parsed[:logging]
     }}
   end
 
