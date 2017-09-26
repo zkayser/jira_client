@@ -28,7 +28,7 @@ defmodule JiraClient.ArgsTest do
     end
 
     test "missing username" do
-      {:error, "missing arguments for configure command"} = Args.parse(["configure"])
+      {:error, "missing arguments :username for configure command"} = Args.parse(["configure"])
     end
   end
 
@@ -49,14 +49,21 @@ defmodule JiraClient.ArgsTest do
       assert "1.2.3.4" == args.fix_version
     end
 
+    test "fix version is optional" do
+      {:ok, args} = Args.parse(["create_issue", "--project", "PROJECT ONE", "--message", "message"])
+
+      assert "create_issue" == args.command
+      assert "PROJECT ONE" == args.project
+      assert "message" == args.message
+      assert nil == args.fix_version
+    end
+
     test "create_issue missing argument" do
-      expected_error = {:error, "missing arguments for create_issue command"}
-      assert expected_error == 
+      assert {:error, "missing arguments :message for create_issue command"} == 
         Args.parse(["create_issue", "--project", "PROJECT ONE", "--fixVersion", "1.2.3.4"]) # missing message
-      assert expected_error == 
+
+      assert {:error, "missing arguments :project for create_issue command"} == 
         Args.parse(["create_issue", "--fixVersion", "1.2.3.4", "--message", "message"])     # missing project
-      assert expected_error == 
-        Args.parse(["create_issue", "--project", "PROJECT ONE", "--message", "message"])    # missing fix version
     end
    end
 
@@ -75,7 +82,7 @@ defmodule JiraClient.ArgsTest do
     end
 
     test "close_issue missing argument" do
-      expected_error = {:error, "missing arguments for close_issue command"}
+      expected_error = {:error, "missing arguments :issue for close_issue command"}
       assert expected_error == Args.parse(["close_issue"]) # missing issue
     end
   end

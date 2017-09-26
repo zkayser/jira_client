@@ -43,7 +43,7 @@ defmodule JiraClient.Command.CreateIssue do
   end
 
   ## If there is not fix version entered then choose the latest
-  defp entered_or_latest(fix_versions, "") do
+  defp entered_or_latest(fix_versions, nil) do
     sorted_fix_versions = Enum.sort(fix_versions, fn fix_version_a, fix_version_b -> fix_version_a.id <= fix_version_b.id end)
     found_fix_version = List.last(sorted_fix_versions)
     {:ok, found_fix_version.id}

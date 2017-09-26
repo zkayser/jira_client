@@ -4,19 +4,23 @@ defmodule JiraClient.Args do
   @commands %{
     "help"      => %{
       args:   [],
-      aliases: []
+      aliases: [],
+      mandatory: []
     },
     "configure" => %{
       args: [username: :string],
       aliases: [u: :username],
+      mandatory: [:username]
     },
     "create_issue" => %{
       args: [project: :string, message: :string, fixVersion: :string],
       aliases: [m: :message, p: :project, f: :fixVersion],
+      mandatory: [:project, :message]
     },
     "close_issue" =>  %{
       args: [issue: :string],
       aliases: [i: :issue],
+      mandatory: [:issue]
     }
   }
 
@@ -62,7 +66,7 @@ defmodule JiraClient.Args do
 
   defp validate({args, [command], invalid}) do
     case Map.has_key?(@commands, command) do
-      true  -> validate_command({args, [command], invalid})
+      true  -> validate_args(args, [command], invalid)
       false -> "invalid command: '#{command}'"
     end
   end
@@ -71,13 +75,13 @@ defmodule JiraClient.Args do
     "only one command please: #{inspect commands}"
   end
 
-  defp validate_command({args, [command], invalid}) do
-    expected_args = commands_as_args(@commands, command)
-    passed_args   = args |> Keyword.keys |> Enum.sort
+  defp validate_args(args, [command], invalid) do
+    arg_names = Keyword.keys(args)
 
-    case passed_args == expected_args do
-      true  -> {args, [command], invalid}
-      false -> "missing arguments for #{command} command"
+    missing_names = Enum.find(@commands[command].mandatory, fn(mandatory_name) -> !Enum.member?(arg_names, mandatory_name) end)
+    case missing_names do
+      nil  -> {args, [command], invalid}
+      _ -> "missing arguments #{inspect missing_names} for #{command} command"
     end
   end
 
@@ -89,12 +93,5 @@ defmodule JiraClient.Args do
   # Prepare data for ParseOptions aliases argument.
   defp commands_as_aliases(commands) do
     Enum.reduce(Map.values(commands), [], fn(command, acc) -> acc ++ command.aliases end)
-  end
-
-  # Prepare data for comparison with command line args.
-  defp commands_as_args(commands, command) do
-    commands[command].args
-    |> Keyword.keys
-    |> Enum.sort
   end
 end
