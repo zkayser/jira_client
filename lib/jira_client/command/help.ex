@@ -4,7 +4,7 @@ defmodule JiraClient.Command.Help do
 
       Commands:
       configure --username "esumerfield"
-      create_issue --project "PROJECT A" --fixVersion "1.2.3" --message "this is an issue"
+      create_issue --project "PROJECT A" --message "this is an issue" [--fixVersion "1.2.3"]
       close_issue --issue "ABC-123"
     )}
   end
