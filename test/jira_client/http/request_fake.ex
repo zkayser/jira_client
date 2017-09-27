@@ -66,7 +66,7 @@ defmodule JiraClient.Http.RequestFake do
     Request.new(method, body, path, creds_get_fn)
   end
 
-  def send(request) do
+  def send(request, _ \\ false) do
     Agent.update(__MODULE__, fn state -> 
       %{requests: state.requests ++ [request], responses: state.responses}
     end)

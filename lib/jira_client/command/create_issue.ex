@@ -16,16 +16,16 @@ defmodule JiraClient.Command.CreateIssue do
   @behaviour JiraClient.Command
 
   def run(args) do
-    with {:ok, project_id}     <- find_project(args.project),
-         {:ok, fix_version_id} <- select_fix_version(project_id, args.fix_version),
-         {:ok, issue}          <- create_issue(project_id, args.message, fix_version_id)
+    with {:ok, project_id}     <- find_project(args.project, args.logging),
+         {:ok, fix_version_id} <- select_fix_version(project_id, args.fix_version, args.logging),
+         {:ok, issue}          <- create_issue(project_id, args.message, fix_version_id, args.logging)
     do
       {:ok, "Created #{issue.issue_id}"}
     end
   end
 
-  defp find_project(project_name) do
-    with {:ok, response} <- ApiProjects.send(%{}, ""),
+  defp find_project(project_name, logging) do
+    with {:ok, response} <- ApiProjects.send(%{}, "", logging),
          {:ok, projects} <- ApiProjectsParser.parse(response),
          {:ok, project}  <- select_project(project_name, projects)
     do
@@ -33,8 +33,8 @@ defmodule JiraClient.Command.CreateIssue do
     end
   end
 
-  defp select_fix_version(project_id, entered_fix_version) do
-    with {:ok, response}       <- ApiProjectVersions.send(%{project_id: project_id}, ""),
+  defp select_fix_version(project_id, entered_fix_version, logging) do
+    with {:ok, response}       <- ApiProjectVersions.send(%{project_id: project_id}, "", logging),
          {:ok, fix_versions}   <- ApiProjectVersionsParser.parse(response),
          {:ok, fix_version_id} <- entered_or_latest(fix_versions, entered_fix_version)
     do
@@ -57,9 +57,9 @@ defmodule JiraClient.Command.CreateIssue do
     end
   end
 
-  defp create_issue(project_id, message, fix_version_id) do
+  defp create_issue(project_id, message, fix_version_id, logging) do
     with {:ok, request}  <- ApiCreateIssueFormatter.format(%{project_id: project_id, message: message, fix_version: fix_version_id}),
-         {:ok, response} <- ApiCreateIssue.send(%{}, request),
+         {:ok, response} <- ApiCreateIssue.send(%{}, request, logging),
          {:ok, issue}    <- ApiCreateIssueParser.parse(response)
     do
       {:ok, issue}

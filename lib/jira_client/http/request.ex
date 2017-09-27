@@ -22,19 +22,20 @@ defmodule JiraClient.Http.Request do
     "#{base}/#{path}"
   end
 
-  def send(%Request{headers: headers, body: {}, http_method: method} = req) do
-    logging(req)
-    HTTPotion.request(method, url(req), [headers: headers])
-    |> logging
+  def send(%Request{headers: headers, body: {}, http_method: method} = request, logging) do
+    logging(request, logging)
+    response = HTTPotion.request(method, url(request), [headers: headers])
+    logging(response, logging)
   end
 
-  def send(%Request{headers: headers, body: body, http_method: method} = req) do
-    logging(req)
-    HTTPotion.request(method, url(req), [body: body, headers: headers])
-    |> logging
+  def send(%Request{headers: headers, body: body, http_method: method} = request, logging) do
+    logging(request, logging)
+    response = HTTPotion.request(method, url(request), [body: body, headers: headers])
+    logging(response, logging)
   end
 
-  defp logging(message) do
+  defp logging(_, false) do end
+  defp logging(message, true) do
     IO.puts message
     message
   end

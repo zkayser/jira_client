@@ -3,7 +3,7 @@ defmodule JiraClient.Api.SenderTest do
 
   defmodule SenderTestFake do
     @behaviour JiraClient.Api.Sender
-    def send(attributes, body) do
+    def send(attributes, body, _ \\ false) do
       {:ok, attributes, %{body: body}}
     end
   end

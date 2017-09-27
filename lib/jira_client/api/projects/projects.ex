@@ -4,9 +4,9 @@ defmodule JiraClient.Api.Projects do
 
   @behaviour JiraClient.Api.Sender
 
-  def send(_, body) do
+  def send(_, body, logging \\ false) do
     response = @request.new(:get, body, "rest/api/latest/project")
-    |> @request.send
+    |> @request.send(logging)
 
     {:ok, response}
   end

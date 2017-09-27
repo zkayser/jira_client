@@ -8,9 +8,9 @@ defmodule JiraClient.Api.CloseIssue do
 
   @behaviour JiraClient.Api.Sender
 
-  def send(attributes, body) do
+  def send(attributes, body, logging \\ false) do
     response = @request.new(:post, body, "/rest/api/latest/issue/#{attributes.id}/transitions")
-    |> @request.send()
+    |> @request.send(logging)
 
     {:ok, response}
   end
