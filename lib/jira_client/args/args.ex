@@ -51,7 +51,7 @@ defmodule JiraClient.Args do
        username:          parsed[:username],
        project:           parsed[:project],
        issue:             parsed[:issue],
-       fix_version:       parsed[:fixVersion],
+       fix_version:       normalize_string(parsed[:fixVersion]),
        message:           parsed[:message],
        close_transition:  parsed[:closed_transition],
        logging:           !!parsed[:logging]
@@ -85,6 +85,11 @@ defmodule JiraClient.Args do
       nil  -> {args, [command], invalid}
       _ -> "missing arguments #{inspect missing_names} for #{command} command"
     end
+  end
+
+  defp normalize_string(value) do
+    if (nil == value), do: "",
+    else: value
   end
 
   # Prepare data for ParseOptions strict argument.

@@ -75,7 +75,7 @@ defmodule JiraClient.ArgsTest do
       assert "create_issue" == args.command
       assert "PROJECT ONE" == args.project
       assert "message" == args.message
-      assert nil == args.fix_version
+      assert "" == args.fix_version
     end
 
     test "create_issue missing argument" do
