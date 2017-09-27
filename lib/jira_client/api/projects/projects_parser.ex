@@ -9,6 +9,10 @@ defmodule JiraClient.Api.ProjectsParser do
     parse_response Poison.Parser.parse(body)
   end
 
+  def parse(response) do
+    IO.puts(">>>> what no response? #{response}")
+  end
+
   defp parse_response({:ok, project_list}) do
     {:ok,
       parse_project(project_list, [])
