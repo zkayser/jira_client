@@ -50,7 +50,7 @@ Issue closed: XXX-123
 Each developer must attend to change tracking against the story they are working on. This flow 
 requires the following basic steps:
 
-* Identity the project story id of the story to be completed.
+* Identify the project story id of the story to be completed.
 * Change the apprppriate code.
 * Create a product change id to associate the code changes.
 * Commit the code changes with the product change id.
