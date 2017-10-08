@@ -10,7 +10,7 @@ defmodule JiraClient.Api.ProjectsParser do
   end
 
   def parse(response) do
-    IO.puts(">>>> what no response? #{response}")
+    IO.puts(">>>> what no response? #{inspect response}")
   end
 
   defp parse_response({:ok, project_list}) do

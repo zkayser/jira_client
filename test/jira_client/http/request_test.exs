@@ -1,8 +1,9 @@
 defmodule JiraClient.Http.RequestTest do
   use ExUnit.Case
 
-  alias JiraClient.Http.Request
+  import ExUnit.CaptureIO
 
+  alias JiraClient.Http.Request
   @example_body %{field: :value, field2: %{key: :value2}}
 
   # TODO move definition into Http.Request
@@ -29,4 +30,16 @@ defmodule JiraClient.Http.RequestTest do
     assert Request.url(req) == "#{Application.get_env(:jira_client, :base_url)}/#{@path}"
   end
 
+  test "logging on" do
+    assert "Hello\n" == capture_io fn ->
+      assert "Hello" == Request.logging("Hello", true)
+    end
+
+  end
+
+  test "logging off" do
+    assert "" == capture_io fn ->
+      assert "Hello" == Request.logging("Hello", false)
+    end
+  end
 end

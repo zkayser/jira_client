@@ -34,8 +34,8 @@ defmodule JiraClient.Http.Request do
     logging(response, logging)
   end
 
-  defp logging(_, false) do end
-  defp logging(message, true) do
+  def logging(message, false), do: message
+  def logging(message, true) do
     IO.puts message
     message
   end
