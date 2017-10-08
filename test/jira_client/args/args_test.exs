@@ -107,6 +107,15 @@ defmodule JiraClient.ArgsTest do
     end
   end
 
+  describe "command list projects" do
+
+    test "select command" do
+      {:ok, args} = Args.parse(["list_projects"])
+
+      assert "list_projects" == args.command
+    end
+  end
+
   describe "argument validation" do
 
     test "no command" do

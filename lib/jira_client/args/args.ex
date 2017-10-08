@@ -12,6 +12,11 @@ defmodule JiraClient.Args do
       aliases:   [u: :username],
       mandatory: [:username]
     },
+    "list_projects" => %{
+      args:      [logging: :boolean],
+      aliases:   [l: :logging],
+      mandatory: []
+    },
     "create_issue" => %{
       args:      [project: :string, message: :string, fixVersion: :string, logging: :boolean],
       aliases:   [m: :message, p: :project, f: :fixVersion, l: :logging],
