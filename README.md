@@ -78,4 +78,7 @@ $ track_change "refactor more bad code to make it good"
 $ go home.
 ```
 
+## References
+
+* JIRA API doc: https://docs.atlassian.com/jira/REST/cloud/
 
