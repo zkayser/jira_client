@@ -3,21 +3,21 @@ defmodule JiraClient.Api.CloseIssueFormatter do
   Documentation from https://docs.atlassian.com/jira/REST/cloud/#api/2/issue-doTransition
   {
     "update": {
-        "comment": [
-            {
-                "add": {
-                    "body": "Bug has been fixed."
-                }
-            }
-        ]
+      "comment": [
+        {
+          "add": {
+              "body": "Bug has been fixed."
+          }
+        }
+      ]
     },
     "fields": {
-        "assignee": {
-            "name": "bob"
-        },
-        "resolution": {
-            "name": "Fixed"
-        }
+      "assignee": {
+        "name": "bob"
+      },
+      "resolution": {
+        "name": "Fixed"
+      }
     },
     "transition": {
         "id": "5"
