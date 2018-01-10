@@ -2,15 +2,7 @@ defmodule JiraClient.Api.CloseIssueParser do
 
   @behaviour JiraClient.Api.Parser
 
-  def parse(%HTTPotion.Response{body: body}) do
-    parse_data Poison.Parser.parse(body)    
-  end
-
-  defp parse_data({:ok, data}) do
-    {:ok, 
-      %{
-        issue_id: data["key"]
-      }
-    }
-  end
+  def parse(%HTTPotion.Response{status_code: 200}), do: {:ok, "Success"}
+  def parse(%HTTPotion.Response{status_code: 204}), do: {:ok, "Success"}
+  def parse(%HTTPotion.Response{status_code: 404}), do: {:error, "No issue found"}
 end

@@ -3,7 +3,7 @@ defmodule JiraClient.Api.CloseIssueFormatterTest do
   alias JiraClient.Api.CloseIssueFormatter
 
   test "Formats args" do
-    expected = ~s({"transitions":{"id":"5"}})
+    expected = ~s({"transition":{"id":"5"}})
 
     assert {:ok, expected} == CloseIssueFormatter.format(%{transition_id: "5"})
   end

@@ -54,7 +54,7 @@ defmodule JiraClient.Api.CloseIssueFormatter do
 
   def format(request) do
     Poison.encode(%{
-      transitions: %{
+      transition: %{
         id: request.transition_id
       }
     })

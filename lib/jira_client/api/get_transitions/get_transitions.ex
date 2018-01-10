@@ -8,7 +8,7 @@ defmodule JiraClient.Api.GetTransitions do
   @behaviour JiraClient.Api.Sender
 
   def send(attributes, _body, logging \\ false) do
-    response = @request.new(:post, "", "/rest/api/2/issue/#{attributes.issue}/transitions")
+    response = @request.new(:get, "", "/rest/api/2/issue/#{attributes.issue}/transitions")
     |> @request.send(logging)
 
     {:ok, response}

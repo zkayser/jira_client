@@ -4,12 +4,14 @@ defmodule JiraClient.Api.CloseIssueParserTest do
   alias JiraClient.Api.CloseIssueParser
 
   test "parse response" do
-    json = ~s({
-      "key": "TST-24"
-    })
+    {:ok, "Success"} = CloseIssueParser.parse(%HTTPotion.Response{body: "", status_code: 200})
+  end
 
-    {:ok, response} = CloseIssueParser.parse(%HTTPotion.Response{body: json, status_code: 204})
+  test "parse response no content" do
+    {:ok, "Success"} = CloseIssueParser.parse(%HTTPotion.Response{body: "", status_code: 204})
+  end
 
-    assert response.issue_id == "TST-24"
+  test "parse response not found" do
+    {:error, "No issue found"} = CloseIssueParser.parse(%HTTPotion.Response{body: "", status_code: 404})
   end
 end

@@ -30,7 +30,7 @@ defmodule JiraClient.Command.CloseIssue do
   end
 
   defp find_transition(issue_name, logging) do
-    with {:ok, response}    <- ApiGetTransitions.send(%{issue: issue_name}, logging),
+    with {:ok, response}    <- ApiGetTransitions.send(%{issue: issue_name}, "", logging),
          {:ok, transitions} <- ApiGetTransitionsParser.parse(response) ,
          {:ok, transition}  <- select_transition("Done", transitions)
     do

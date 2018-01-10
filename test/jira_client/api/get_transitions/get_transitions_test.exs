@@ -1,4 +1,4 @@
-defmodule GetTransitionsTest do
+defmodule JiraClient.Api.GetTransitionsTest do
   use ExUnit.Case
 
   alias JiraClient.Api.GetTransitions
@@ -13,7 +13,7 @@ defmodule GetTransitionsTest do
 
     {:ok, _response} = GetTransitions.send(%{issue: "ABC-123"}, "")
 
-    assert {:post, "", "/rest/api/2/issue/ABC-123/transitions"} == RequestFake.next_request()
+    assert {:get, "", "/rest/api/2/issue/ABC-123/transitions"} == RequestFake.next_request()
   end
 
 end
