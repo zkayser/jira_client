@@ -1,6 +1,6 @@
 defmodule JiraClient.Api.CloseIssueFormatter do
   @moduledoc """
-  Documentation from https://docs.atlassian.com/jira/REST/cloud/#api/2/issue-doTransition
+  Documentation from https://developer.atlassian.com/cloud/jira/platform/rest/#api-api-2-issue-issueIdOrKey-transitions-post
   {
     "update": {
       "comment": [
@@ -55,7 +55,7 @@ defmodule JiraClient.Api.CloseIssueFormatter do
   def format(request) do
     Poison.encode(%{
       transitions: %{
-        id: request.close_transition
+        id: request.transition_id
       }
     })
   end

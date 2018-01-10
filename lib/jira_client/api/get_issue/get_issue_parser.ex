@@ -1,16 +1,16 @@
-defmodule JiraClient.Api.CloseIssueParser do
-
+defmodule JiraClient.Api.GetIssueParser do
   @behaviour JiraClient.Api.Parser
 
   def parse(%HTTPotion.Response{body: body}) do
-    parse_data Poison.Parser.parse(body)    
+    parse_data Poison.Parser.parse(body)
   end
 
   defp parse_data({:ok, data}) do
-    {:ok, 
+    {:ok,
       %{
-        issue_id: data["key"]
+        id: data["id"],
       }
     }
   end
+
 end
