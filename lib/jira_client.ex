@@ -2,7 +2,6 @@ defmodule JiraClient do
   alias JiraClient.Args
   alias JiraClient.Command
 
-  # TODO can we use Application.get_application(__MODULE__) to eliminate app name duplication
   @command_module Application.get_env(:jira_client, :command_module, JiraClient.Command)
 
   def main(args) do
