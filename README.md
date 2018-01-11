@@ -29,15 +29,21 @@ Create an issue.
 
 ```bash
 $ jira_client create_issue -m "change code to make it better" -p "Project Name"
-Issue created: XXX-123
+XXX-123
 ```
 
 Once a set of commits are complete for an issue the issue can be closed.
 
 ```bash
 $ jira_client close_issue -i XXX-123
-Issue closed: XXX-123
+Closed
 ```
+
+Also there are scripts that support a combination of jira integrations. This script
+creates and issue, places the issue id in the clipboard, and closes it. This cleans up the
+jira tracking side and allows you to commit against the issue.
+
+* track_change.sh "refactor bad code to make it good"
 
 ## Future command ideas
 
@@ -45,7 +51,7 @@ Issue closed: XXX-123
 * Assign issue to me
 * Initiate workflow event for issue.
 
-## Developer Workflow
+## Supported Developer Workflow
 
 Each developer must attend to change tracking against the story they are working on. This flow 
 requires the following basic steps:
