@@ -43,7 +43,7 @@ Also there are scripts that support a combination of jira integrations. This scr
 creates and issue, places the issue id in the clipboard, and closes it. This cleans up the
 jira tracking side and allows you to commit against the issue.
 
-* track_change.sh "refactor bad code to make it good"
+* track_change.sh --project "Project Name" --message "change code to make it better"
 
 ## Future command ideas
 
