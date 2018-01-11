@@ -20,7 +20,7 @@ defmodule JiraClient.Command.CreateIssue do
          {:ok, fix_version_id} <- select_fix_version(project_id, args.fix_version, args.logging),
          {:ok, issue}          <- create_issue(project_id, args.message, fix_version_id, args.logging)
     do
-      {:ok, "Created #{issue.issue_id}"}
+      {:ok, "#{issue.issue_id}"}
     end
   end
 

@@ -52,7 +52,7 @@ defmodule JiraClient.Command.CloseIssue do
          {:ok, response} <- ApiCloseIssue.send(%{issue_id: issue_id}, request, logging),
          {:ok, _result}  <- ApiCloseIssueParser.parse(response)
     do
-      {:ok, 'Clossed'}
+      {:ok, "Closed"}
     else
       message -> {:error, message}
     end

@@ -16,4 +16,7 @@ defmodule JiraClient.Api.GetTransitionsParser do
     }
   end
 
+  # {"errorMessages":["Issue does not exist or you do not have permission to see it."],"errors":{}}
+  # {:error, :invalid, 0}
+
 end
