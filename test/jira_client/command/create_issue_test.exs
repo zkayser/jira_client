@@ -62,7 +62,7 @@ defmodule JiraClient.Command.CreateIssueTest do
 
       {:ok, message} = CreateIssue.run(%Args{project: "Example", fix_version: "1.2.3", message: "MESSAGE 1" })
 
-      assert "Created ISSUE-123" == message
+      assert "ISSUE-123" == message
     end
 
     test "create issue using latest project fix version number" do
@@ -114,7 +114,7 @@ defmodule JiraClient.Command.CreateIssueTest do
 
       {:ok, message} = CreateIssue.run(%Args{project: "Example", message: "MESSAGE 1" })
 
-      assert "Created ISSUE-123" == message
+      assert "ISSUE-123" == message
     end
   end
 
