@@ -21,8 +21,8 @@ erl_crash.dump
 
 /tags
 
-# Executables
-/bin/*
+# Ignroe the generated binary file
+bin/jira_client
 
 # Editor specific project files
 untitled.sublime-project
