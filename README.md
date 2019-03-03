@@ -11,11 +11,11 @@ number in a commit message.
 
 Generate the executable
 
-> MIX_ENV=prod mix escript.build
+    MIX_ENV=prod mix escript.build
 
 Generates the command
 
-> bin/jira_client
+    bin/jira_client
 
 ## Usage
 
@@ -51,7 +51,7 @@ jira tracking side and allows you to commit against the issue.
 * Assign issue to me
 * Initiate workflow event for issue.
 
-## Supported Developer Workflow
+## Future Developer Workflow
 
 Each developer must attend to change tracking against the story they are working on. This flow 
 requires the following basic steps:
