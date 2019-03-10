@@ -116,6 +116,24 @@ defmodule JiraClient.ArgsTest do
     end
   end
 
+  describe "assign command" do
+    test "run" do
+      {:ok, args} = Args.parse(["assign", "--issue", "XXX-123"])
+
+      assert "assign" == args.command
+      assert "XXX-123" == args.issue
+      assert nil == args.username
+    end
+
+    test "run with username" do
+      {:ok, args} = Args.parse(["assign", "--username", "fred", "--issue", "XXX-123"])
+
+      assert "assign" == args.command
+      assert "XXX-123" == args.issue
+      assert "fred" == args.username
+    end
+  end
+
   describe "argument validation" do
 
     test "no command" do
@@ -136,5 +154,4 @@ defmodule JiraClient.ArgsTest do
         Args.parse(["invalid1", "invalid2", "invalid3", "--project", "PROJECT ONE"])
     end
   end
-
 end
