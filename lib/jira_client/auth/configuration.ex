@@ -1,12 +1,12 @@
-defmodule JiraClient.Auth.Credentials do
+defmodule JiraClient.Auth.Configurations do
   @moduledoc """
   This module contains functions for authenticating with the Jira
   Api using basic authentication
   """
 
-  @behaviour JiraClient.Credentials
+  @behaviour JiraClient.Configurations
 
-  alias JiraClient.Credentials, as: Creds
+  alias JiraClient.Configurations, as: Creds
   alias JiraClient.Utils.FileUtils
 
   def init(), do: build_credentials(nil)

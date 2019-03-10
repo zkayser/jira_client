@@ -1,7 +1,7 @@
-defmodule JiraClient.Auth.CredentialsMock do
-  @behaviour JiraClient.Credentials
+defmodule JiraClient.Auth.ConfigurationsMock do
+  @behaviour JiraClient.Configurations
 
-  alias JiraClient.Credentials, as: Creds
+  alias JiraClient.Configurations, as: Creds
 
   defmodule FakeIO do
     def puts(string), do: string

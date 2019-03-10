@@ -1,4 +1,4 @@
-defmodule JiraClient.Credentials do
+defmodule JiraClient.Configurations do
 
   @doc """
   Initializes a user's Jira credentials

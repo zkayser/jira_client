@@ -1,4 +1,4 @@
-defmodule JiraClient.Auth.CredentialsMockTest do
+defmodule JiraClient.Auth.ConfigurationsMockTest do
   use ExUnit.Case, async: true
 
   @credentials Application.get_env(:jira_client, :credentials_module)

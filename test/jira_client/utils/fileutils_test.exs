@@ -9,13 +9,13 @@ defmodule JiraClient.Utils.FileUtilsTest do
     :ok
   end
 
-  test "mkdir_for_credentials" do
+  test "mkdir_for_configuration" do
     FileUtils.mkdir_for_credentials()
 
     assert FileUtils.creds_dir_exists?()
   end
 
-  test "write_credentials" do
+  test "write_configuration" do
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials("username:password")
 
@@ -24,7 +24,7 @@ defmodule JiraClient.Utils.FileUtilsTest do
     assert FileMock.read(FileUtils.get_creds_file()) == {:ok, "username:password"}
   end
 
-  test "read credentials" do
+  test "read configuration" do
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials("username:password")
 

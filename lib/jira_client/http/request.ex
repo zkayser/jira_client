@@ -1,6 +1,6 @@
 defmodule JiraClient.Http.Request do
   alias JiraClient.Http.Request
-  alias JiraClient.Auth.Credentials
+  alias JiraClient.Auth.Configurations
 
   defstruct headers: [],
             body: %{},
@@ -8,7 +8,7 @@ defmodule JiraClient.Http.Request do
             base_url: "",
             http_method: :get
 
-  def new(method, body, path, creds_get_fn \\ fn -> Credentials.get() end) do
+  def new(method, body, path, creds_get_fn \\ fn -> Configurations.get() end) do
     %Request{
       headers: ["Content-Type": "application/json", "Authorization": "Basic #{creds_get_fn.()}"],
       body: body,

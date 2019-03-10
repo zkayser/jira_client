@@ -3,7 +3,7 @@ defmodule JiraClient.Command.Configure do
     Allow a user to create a configuration file for using this product.
   """
 
-  alias JiraClient.Auth.Credentials
+  alias JiraClient.Auth.Configurations
 
   @behaviour JiraClient.Command
 
@@ -16,7 +16,7 @@ defmodule JiraClient.Command.Configure do
   def run_with_password(args, password_getter) do
     password = String.trim password_getter.()
 
-    Credentials.init(args.username, password)
+    Configurations.init(args.username, password)
     {:ok, "Configuration complete"}
   end
 
