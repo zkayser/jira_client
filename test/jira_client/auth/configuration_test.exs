@@ -18,9 +18,12 @@ defmodule JiraClient.Auth.ConfigurationsTest do
   end
 
   test "get credentials when they exist" do
-    Configurations.store(%JiraClient.Configurations{base64_encoded: "username:password"})
+    Configurations.store(%JiraClient.Configurations{base64_encoded: "username:password", jira_server: "http://someserver"})
 
-    assert "username:password" == Configurations.get() 
+    config = Configurations.get()
+
+    assert "username:password" == config.base64_encoded
+    assert "http://someserver" == config.jira_server
   end
 
   test "encode credentials" do
@@ -36,11 +39,12 @@ defmodule JiraClient.Auth.ConfigurationsTest do
   end
 
   test "init with empty strings" do
-    assert %JiraClient.Configurations{errors: ["Credentials not provided"]} == Configurations.init("", "")
+    assert %JiraClient.Configurations{errors: ["Credentials not provided"]} == Configurations.init("", "", "")
   end
   
   test "init with good username and password" do
-    assert %JiraClient.Configurations{base64_encoded: "dXNlcm5hbWU6cGFzc3dvcmQ="} == Configurations.init("username", "password")
+    config = Configurations.init("username", "password", "http://someserver")
+    assert %JiraClient.Configurations{base64_encoded: "dXNlcm5hbWU6cGFzc3dvcmQ=", jira_server: "http://someserver"} == config
   end
   
 end

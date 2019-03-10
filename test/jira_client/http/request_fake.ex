@@ -62,8 +62,10 @@ defmodule JiraClient.Http.RequestFake do
       next_request
   end
 
-  def new(method, body, path, creds_get_fn \\ fn -> "username:password" end) do
-    Request.new(method, body, path, creds_get_fn)
+  def new(method, body, path, config_get_fn \\ fn -> 
+      %{base64_encoded: "username:password", jira_server: "http://someserver"}
+    end) do
+    Request.new(method, body, path, config_get_fn)
   end
 
   def send(request, _ \\ false) do

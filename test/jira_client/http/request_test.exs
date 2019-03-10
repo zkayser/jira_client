@@ -10,12 +10,13 @@ defmodule JiraClient.Http.RequestTest do
   @path "rest/api/2"
 
   setup do
-    [creds_get_fn: fn -> Base.encode64("username:password") end]
+    [config_get_fn: fn -> 
+      %JiraClient.Configurations{ base64_encoded: Base.encode64("username:password"), jira_server: "http://someserver" } 
+    end]
   end
 
   test "Request.new", context do
-    req = Request.new(:get, @example_body, @path, context[:creds_get_fn])
-    req = %{req | base_url: "http://anyserver"} 
+    req = Request.new(:get, @example_body, @path, context[:config_get_fn])
 
     body = @example_body
 
@@ -23,13 +24,12 @@ defmodule JiraClient.Http.RequestTest do
     assert req.path == @path
     assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Base.encode64("username:password")}"]
     assert req.body == body
-    assert req.base_url == "http://anyserver"
+    assert req.base_url == "http://someserver"
   end
 
   test "request url", context do
-    req = Request.new(:get, @example_body, @path, context[:creds_get_fn])
-    req = %{req | base_url: "http://anyserver"} 
-    assert Request.url(req) == "http://anyserver/#{@path}"
+    req = Request.new(:get, @example_body, @path, context[:config_get_fn])
+    assert Request.url(req) == "http://someserver/#{@path}"
   end
 
   test "logging on" do

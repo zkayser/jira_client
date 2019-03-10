@@ -9,18 +9,17 @@ defmodule JiraClient.Command.Configure do
 
   def run(args) do
     run_with_inputs(args, fn -> 
+      domain = domain_get("Enter JIRA domain (https://YOURCOMPANY.atlassian.net)")
       password = password_get("Enter JIRA passwod: ", true)
-      #domain = domain_get("Enter JIRA domain")
-      [password]
+      [password, domain]
     end)
   end
 
   def run_with_inputs(args, inputs_getter) do
-    password = case inputs_getter.() do
-      [password] ->  String.trim(password)
+    case inputs_getter.() do
+      [password, jira_server] ->  Configurations.init(args.username, String.trim(password), String.trim(jira_server))
     end
-
-    Configurations.init(args.username, password)
+    
     {:ok, "Configuration complete"}
   end
 

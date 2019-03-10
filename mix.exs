@@ -36,7 +36,8 @@ defmodule JiraClient.Mixfile do
     [
       {:httpotion, "~> 3.0"},
       {:poison, "~> 3.1"},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
     ]
   end
 end

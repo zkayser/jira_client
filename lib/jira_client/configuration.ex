@@ -15,9 +15,10 @@ defmodule JiraClient.Configurations do
   """
   @callback store(credentials :: __MODULE__.t) :: __MODULE__.t
 
-  defstruct base64_encoded: "", errors: []
+  defstruct base64_encoded: "", jira_server: "", errors: []
   @type t :: %__MODULE__{
     base64_encoded: String.t,
+    jira_server: String.t,
     errors: [String.t]
   }
 end

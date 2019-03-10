@@ -4,12 +4,14 @@ defmodule JiraClient.Http.Request.String.CharsTest do
   import ExUnit.CaptureIO
 
   setup do
-    [creds_get_fn: fn -> Base.encode64("username:password") end]
+    [config_get_fn: fn -> 
+      %JiraClient.Configurations{ base64_encoded: Base.encode64("username:password"), jira_server: "http://someserver" } 
+    end]
   end
 
   test "output pretty request", context do
     output = capture_io fn ->
-      request = JiraClient.Http.Request.new(:get, "REQUEST BODY", "http://a/b", context[:creds_get_fn])
+      request = JiraClient.Http.Request.new(:get, "REQUEST BODY", "http://a/b", context[:config_get_fn])
       IO.puts(request)
     end
 
@@ -21,16 +23,16 @@ defmodule JiraClient.Http.Request.String.CharsTest do
 
   test "ensure that the Authorization information is not printed", context do
     output = capture_io fn ->
-      request = JiraClient.Http.Request.new(:get, "REQUEST BODY", "http://a/b", context[:creds_get_fn])
+      request = JiraClient.Http.Request.new(:get, "REQUEST BODY", "http://a/b", context[:config_get_fn])
       IO.puts(request)
     end
 
-    refute Regex.match?(~r/Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=/, output) , "Should not have matched"
+    assert Regex.match?(~r/Authorization: Basic SECRET/, output), "Should have matched #{output}"
   end
 
   test "make it clear when thre is no body being posted.", context do
     output = capture_io fn ->
-      request = JiraClient.Http.Request.new(:get, "", "http://a/b", context[:creds_get_fn])
+      request = JiraClient.Http.Request.new(:get, "", "http://a/b", context[:config_get_fn])
       IO.puts(request)
     end
 

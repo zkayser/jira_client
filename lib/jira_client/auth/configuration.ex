@@ -10,11 +10,11 @@ defmodule JiraClient.Auth.Configurations do
   alias JiraClient.Utils.FileUtils
 
   def init(), do: build_credentials(nil)
-  def init("", ""), do: build_credentials(nil)
   def init(_, {:error, _}), do: build_credentials(nil)
-  def init(username, pass) do
+  def init("", "", _), do: build_credentials(nil)
+  def init(username, pass, jira_server) do
     encode(username, pass)
-    |> build_credentials()
+    |> build_credentials(jira_server)
     |> store()
   end
 
@@ -23,7 +23,10 @@ defmodule JiraClient.Auth.Configurations do
       {:ok, contents} <- FileUtils.read_credentials()
     do
       {:ok, json} = Poison.Parser.parse(contents)
-      json["base64_encoded"]
+      %Configuration{
+        base64_encoded: json["base64_encoded"],
+        jira_server: json["jira_server"]
+      }
     else
       false ->
         IO.puts "Your credentials have not been configured. Run the following command for access your Jira instance: "
@@ -39,10 +42,8 @@ defmodule JiraClient.Auth.Configurations do
      get()
   end
 
-  def store(%Configuration{base64_encoded: encoded} = configuration) do
-    {:ok, contents} = Poison.encode(%{
-      base64_encoded: encoded
-    })
+  def store(%Configuration{base64_encoded: encoded, jira_server: jira_server} = configuration) do
+    {:ok, contents} = Poison.encode(%{ base64_encoded: encoded, jira_server: jira_server })
 
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials(contents)
@@ -56,7 +57,7 @@ defmodule JiraClient.Auth.Configurations do
   end
 
   defp build_credentials(nil), do: %Configuration{errors: ["Credentials not provided"]}
-  defp build_credentials(encoded_credentials) do
-    %Configuration{base64_encoded: encoded_credentials}
+  defp build_credentials(encoded_credentials, jira_server) do
+    %Configuration{base64_encoded: encoded_credentials, jira_server: jira_server}
   end
 end
