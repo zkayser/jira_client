@@ -23,6 +23,9 @@ Create a config file in your home dir (.jira/credentials.txt) to hold your jira 
 
 ```bash
 jira_client configure --username <jira username>
+
+Enter JIRA domain (https://YOURCOMPANY.atlassian.net) ***********
+Enter JIRA passwod: **********
 ```
 
 Create an issue.
