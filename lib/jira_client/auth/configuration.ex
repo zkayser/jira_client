@@ -6,7 +6,7 @@ defmodule JiraClient.Auth.Configurations do
 
   @behaviour JiraClient.Configurations
 
-  alias JiraClient.Configurations, as: Creds
+  alias JiraClient.Configurations, as: Configuration
   alias JiraClient.Utils.FileUtils
 
   def init(), do: build_credentials(nil)
@@ -32,13 +32,13 @@ defmodule JiraClient.Auth.Configurations do
     end
   end
 
-  def store(%Creds{errors: errors}) when length(errors) > 0 do
+  def store(%Configuration{errors: errors}) when length(errors) > 0 do
      IO.puts "There is an error or errors with your credentials:\n#{for error <- errors, do: IO.inspect(error)}"
      IO.puts "Please try again."
      get()
   end
 
-  def store(%Creds{base64_encoded: encoded} = creds) do
+  def store(%Configuration{base64_encoded: encoded} = creds) do
     FileUtils.mkdir_for_credentials()
     FileUtils.write_credentials(encoded)
     creds
@@ -49,8 +49,8 @@ defmodule JiraClient.Auth.Configurations do
     |> Base.encode64()
   end
 
-  defp build_credentials(nil), do: %Creds{errors: ["Credentials not provided"]}
+  defp build_credentials(nil), do: %Configuration{errors: ["Credentials not provided"]}
   defp build_credentials(encoded_credentials) do
-    %Creds{base64_encoded: encoded_credentials}
+    %Configuration{base64_encoded: encoded_credentials}
   end
 end
