@@ -33,7 +33,7 @@ defmodule JiraClient.Command.ListProjectsTest do
        {
          "self": "http://www.example.com/jira/rest/api/2/project/EX",
          "id": "10000",
-         "key": "PROJECT-123",
+         "key": "PROJECT-456",
          "name": "Example 2",
          "avatarUrls": {
            "48x48": "http://www.example.com/jira/secure/projectavatar?size=large&pid=10000",
@@ -52,8 +52,8 @@ defmodule JiraClient.Command.ListProjectsTest do
 
     {:ok, output} = JiraClient.Command.run(JiraClient.Command, "list_projects", %Args{})
 
-    assert Regex.match?(~r/Example 1/, output)
-    assert Regex.match?(~r/Example 2/, output)
+    assert Regex.match?(~r/Example 1 \(PROJECT-123\)/, output), "didn't find match in #{output}"
+    assert Regex.match?(~r/Example 2 \(PROJECT-456\)/, output), "didn't find match in #{output}"
   end
 end
 
