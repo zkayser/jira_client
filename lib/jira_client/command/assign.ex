@@ -3,7 +3,16 @@ defmodule JiraClient.Command.Assign do
     An assign command assigns an issue to a user. If the user is not specified then the
     username of the logged in user is assumed as the assign to me feature.
 
-    Documentation: https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issue-issueIdOrKey-assignee-put
+    Documentation:
+
+    Find the user: https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-user-search-get
+
+    curl --request GET \
+      --url '/rest/api/3/user/search' \
+      --header 'Authorization: Bearer <access_token>' \
+      --header 'Accept: application/json'
+
+    Assign the user: https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issue-issueIdOrKey-assignee-put
 
     curl --request PUT \
       --url '/rest/api/3/issue/{issueIdOrKey}/assignee' \
