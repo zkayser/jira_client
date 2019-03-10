@@ -12,19 +12,19 @@ defmodule JiraClient.Command.ConfigureTest do
   end
 
   test "running configuration" do
-    {:ok, result} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret" end)
+    {:ok, result} = Configure.run_with_inputs(%Args{username: "fred"}, fn -> ["secret"] end)
 
     assert result == "Configuration complete"
   end
 
   test "configure with password with no carriage return line feed" do
-    {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret\r\n" end)
+    {:ok, _} = Configure.run_with_inputs(%Args{username: "fred"}, fn -> ["secret\r\n"] end)
 
     assert "ZnJlZDpzZWNyZXQ=" == Configurations.get() 
   end
 
   test "read password from stdin" do
-    {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret" end)
+    {:ok, _} = Configure.run_with_inputs(%Args{username: "fred"}, fn -> ["secret"] end)
 
     assert  Base.encode64("fred:secret") == Configurations.get() 
   end

@@ -8,16 +8,24 @@ defmodule JiraClient.Command.Configure do
   @behaviour JiraClient.Command
 
   def run(args) do
-    run_with_password(args, fn -> 
-      password_get("Enter JIRA passwod: ", true)
+    run_with_inputs(args, fn -> 
+      password = password_get("Enter JIRA passwod: ", true)
+      #domain = domain_get("Enter JIRA domain")
+      [password]
     end)
   end
 
-  def run_with_password(args, password_getter) do
-    password = String.trim password_getter.()
+  def run_with_inputs(args, inputs_getter) do
+    password = case inputs_getter.() do
+      [password] ->  String.trim(password)
+    end
 
     Configurations.init(args.username, password)
     {:ok, "Configuration complete"}
+  end
+
+  def domain_get(prompt) do
+    IO.gets(prompt <> " ")
   end
 
   # Password prompt that hides input by every 1ms
