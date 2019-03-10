@@ -13,7 +13,7 @@ defmodule JiraClient.Http.Request do
       headers: ["Content-Type": "application/json", "Authorization": "Basic #{creds_get_fn.()}"],
       body: body,
       path: path,
-      base_url: Application.get_env(:jira_client, :base_url),
+      base_url: "YOUR DOMAIN UNTIL I PUT IT IN THE CONFIG FILE",
       http_method: method
     }
   end
@@ -36,10 +36,7 @@ defmodule JiraClient.Http.Request do
 
   def logging(message, false), do: message
   def logging(message, true) do
-    IO.puts message
+    IO.inspect message
     message
   end
 end
-
-
-

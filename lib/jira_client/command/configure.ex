@@ -30,11 +30,9 @@ defmodule JiraClient.Command.Configure do
     ref   = make_ref()
     value = IO.gets(prompt <> " ")
 
-
     send pid, {:done, self(), ref}
     receive do: ({:done, ^pid, ^ref}  -> :ok)
 
-    #String.trim(value)
     value
   end
 

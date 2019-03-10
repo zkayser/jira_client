@@ -15,6 +15,7 @@ defmodule JiraClient.Http.RequestTest do
 
   test "Request.new", context do
     req = Request.new(:get, @example_body, @path, context[:creds_get_fn])
+    req = %{req | base_url: "http://anyserver"} 
 
     body = @example_body
 
@@ -22,16 +23,17 @@ defmodule JiraClient.Http.RequestTest do
     assert req.path == @path
     assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Base.encode64("username:password")}"]
     assert req.body == body
-    assert req.base_url == Application.get_env(:jira_client, :base_url)
+    assert req.base_url == "http://anyserver"
   end
 
   test "request url", context do
     req = Request.new(:get, @example_body, @path, context[:creds_get_fn])
-    assert Request.url(req) == "#{Application.get_env(:jira_client, :base_url)}/#{@path}"
+    req = %{req | base_url: "http://anyserver"} 
+    assert Request.url(req) == "http://anyserver/#{@path}"
   end
 
   test "logging on" do
-    assert "Hello\n" == capture_io fn ->
+    assert "\"Hello\"\n" == capture_io fn ->
       assert "Hello" == Request.logging("Hello", true)
     end
 

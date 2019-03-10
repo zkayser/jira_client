@@ -20,9 +20,10 @@ defmodule JiraClient.Auth.Configurations do
 
   def get() do
     with true <- FileUtils.creds_file_exists?(),
-      {:ok, creds} <- FileUtils.read_credentials()
+      {:ok, contents} <- FileUtils.read_credentials()
     do
-      String.trim(creds)
+      {:ok, json} = Poison.Parser.parse(contents)
+      json["base64_encoded"]
     else
       false ->
         IO.puts "Your credentials have not been configured. Run the following command for access your Jira instance: "
@@ -38,10 +39,15 @@ defmodule JiraClient.Auth.Configurations do
      get()
   end
 
-  def store(%Configuration{base64_encoded: encoded} = creds) do
+  def store(%Configuration{base64_encoded: encoded} = configuration) do
+    {:ok, contents} = Poison.encode(%{
+      base64_encoded: encoded
+    })
+
     FileUtils.mkdir_for_credentials()
-    FileUtils.write_credentials(encoded)
-    creds
+    FileUtils.write_credentials(contents)
+
+    configuration
   end
 
   def encode(username, pass) do

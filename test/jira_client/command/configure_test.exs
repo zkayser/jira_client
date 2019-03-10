@@ -2,9 +2,9 @@ defmodule JiraClient.Command.ConfigureTest do
   use ExUnit.Case
   doctest JiraClient.Command.Configure
 
+  alias JiraClient.Auth.Configurations
   alias JiraClient.Command.Configure
   alias JiraClient.Args
-  alias JiraClient.Utils.FileUtils
 
   setup do
     JiraClient.Utils.FileMock.start_link()
@@ -20,13 +20,13 @@ defmodule JiraClient.Command.ConfigureTest do
   test "configure with password with no carriage return line feed" do
     {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret\r\n" end)
 
-    assert {:ok, "ZnJlZDpzZWNyZXQ="} == FileUtils.read_credentials()
+    assert "ZnJlZDpzZWNyZXQ=" == Configurations.get() 
   end
 
   test "read password from stdin" do
     {:ok, _} = Configure.run_with_password(%Args{username: "fred"}, fn -> "secret" end)
 
-    assert {:ok, Base.encode64("fred:secret")} == FileUtils.read_credentials()
+    assert  Base.encode64("fred:secret") == Configurations.get() 
   end
 end
 

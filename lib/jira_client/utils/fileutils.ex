@@ -1,6 +1,6 @@
 defmodule JiraClient.Utils.FileUtils do
   @creds_dir ".jira"
-  @creds_file "credentials.txt"
+  @creds_file "credentials.json"
 
   @file_module Application.get_env(:jira_client, :file_module, File)
 
