@@ -32,7 +32,7 @@ fi
 issue_id=`jira_client create_issue --project "$project" --message "$message"`
 if [[ $? -eq 0 && -n $issue_id ]]; then
   if [[ `uname` == "Darwin" ]]; then
-    echo -n $issue_id | pbcopy
+    echo -n "$issue_id $message" | pbcopy
   fi
 
   echo "Issue ${issue_id}"
