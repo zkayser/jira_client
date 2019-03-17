@@ -44,10 +44,10 @@ defmodule JiraClient.Command.CreateIssue do
 
   ## If there is not fix version entered then choose the latest
   defp entered_or_latest(fix_versions, "") do
-    IO.inspect fix_versions
-    sorted_fix_versions = Enum.sort(fix_versions, fn fix_version_a, fix_version_b -> fix_version_a.id <= fix_version_b.id end)
-    found_fix_version = List.last(sorted_fix_versions)
-    {:ok, found_fix_version.id}
+    case fix_versions do
+      [] -> {:error, "No fix version specified and project has none"}
+      _  -> find_latest_fixversion(fix_versions)
+    end
   end
 
   defp entered_or_latest(fix_versions, entered_fix_version) do
@@ -56,6 +56,12 @@ defmodule JiraClient.Command.CreateIssue do
       nil -> {:error, "couldnt find fix version"}
       _   -> {:ok, found_fix_version.id}
     end
+  end
+
+  defp find_latest_fixversion(fix_versions) do
+    sorted_fix_versions = Enum.sort(fix_versions, fn fix_version_a, fix_version_b -> fix_version_a.id <= fix_version_b.id end)
+    found_fix_version = List.last(sorted_fix_versions)
+    {:ok, found_fix_version.id}
   end
 
   defp create_issue(project_id, message, fix_version_id, logging) do
