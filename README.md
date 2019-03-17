@@ -85,6 +85,13 @@ all your projects and creates an alias for each. Add the generated file to your 
 
 The pattern is simple, jci<project key> to create an issue, or tc<project key> to use the track change process.
 
+For example:
+
+```bash
+alias jcipandroid='jira_client create_issue --project "Product: Android" --message '
+alias tcpandroid='track_change.sh --project "Product: Android" --username <jira username> --message '
+```
+
 ```bash
 $ generate_aliases.sh --filter Product --username `whoami`
 Jira aliases generated
