@@ -118,19 +118,20 @@ defmodule JiraClient.ArgsTest do
 
   describe "assign command" do
     test "run" do
-      {:ok, args} = Args.parse(["assign", "--issue", "XXX-123"])
+      {:ok, args} = Args.parse(["assign", "--issue", "XXX-123", "--username", "somename"])
 
       assert "assign" == args.command
       assert "XXX-123" == args.issue
-      assert nil == args.username
+      assert "somename" == args.username
     end
+  end
 
-    test "run with username" do
-      {:ok, args} = Args.parse(["assign", "--username", "fred", "--issue", "XXX-123"])
+  describe "command user" do
+    test "get user info" do
+      {:ok, args} = Args.parse(["user", "--username", "somename"])
 
-      assert "assign" == args.command
-      assert "XXX-123" == args.issue
-      assert "fred" == args.username
+      assert "user" == args.command
+      assert "somename" == args.username
     end
   end
 

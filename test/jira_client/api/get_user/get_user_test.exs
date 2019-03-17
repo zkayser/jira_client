@@ -11,9 +11,9 @@ defmodule JiraClient.Api.GetUserTest do
   test "send request" do
     RequestFake.expect_response(%HTTPotion.Response{body: ~s({"accountId":"some-long-guid"})})
 
-    {:ok, response} = GetUser.send(%{}, "")
+    {:ok, response} = GetUser.send(%{username: "freddie"}, "")
 
-    assert {:get, "", "/rest/api/2/user"} == RequestFake.next_request()
+    assert {:get, "", "/rest/api/2/user", %{username: "freddie"}} == RequestFake.next_request()
     assert response.body =~ "some-long-guid"
   end
  

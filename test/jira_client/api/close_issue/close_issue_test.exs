@@ -14,7 +14,7 @@ defmodule JiraClient.Api.CloseIssueTest do
 
     {:ok, _response} = CloseIssue.send(%{issue_id: 123}, "")
 
-    assert {:post, "", "/rest/api/latest/issue/123/transitions"} == RequestFake.next_request()
+    assert {:post, "", "/rest/api/latest/issue/123/transitions", %{}} == RequestFake.next_request()
   end
 end
 

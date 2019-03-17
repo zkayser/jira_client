@@ -8,7 +8,13 @@ defmodule JiraClient.Api.GetUserParser do
   defp parse_data({:ok, data}) do
     {:ok,
       %{
+        username: data["name"],
+        email: data["emailAddress"],
         accountId: data["accountId"],
+        displayName: data["displayName"],
+        active: data["active"],
+        timeZone: data["timeZone"],
+        locale: data["locale"]
       }
     }
   end

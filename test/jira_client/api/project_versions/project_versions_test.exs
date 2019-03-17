@@ -14,7 +14,7 @@ defmodule JiraClient.Api.ProjectVersionsTest do
 
     {:ok, response} = ProjectVersions.send(%{project_id: "XXX"}, "some request")
 
-    assert {:get, "", "rest/api/latest/project/XXX/versions"} == RequestFake.next_request()
+    assert {:get, "", "rest/api/latest/project/XXX/versions", %{}} == RequestFake.next_request()
     assert "echo some request" == response
   end
 end

@@ -14,7 +14,7 @@ defmodule JiraClient.Api.CreateIssueTest do
 
     {:ok, response} = CreateIssue.send(%{}, "some request")
 
-    assert {:post, "some request", "rest/api/latest/issue"} == RequestFake.next_request()
+    assert {:post, "some request", "rest/api/latest/issue", %{}} == RequestFake.next_request()
     assert "echo some request" == response
   end
 end

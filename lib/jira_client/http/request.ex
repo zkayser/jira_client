@@ -5,6 +5,7 @@ defmodule JiraClient.Http.Request do
   defstruct headers: [],
             body: %{},
             path: "",
+            queryString: %{},
             base_url: "",
             http_method: :get
 
@@ -22,6 +23,10 @@ defmodule JiraClient.Http.Request do
     }
   end
 
+  def queryString(request, queryString) do
+    %{request | queryString: queryString}
+  end
+
   def url(%Request{base_url: base_url, path: path}) do
     "#{base_url}/#{path}"
   end
@@ -32,11 +37,11 @@ defmodule JiraClient.Http.Request do
     logging(response, logging)
   end
 
-  def send(%Request{headers: headers, body: body, http_method: method} = request, logging) do
+  def send(%Request{headers: headers, body: body, queryString: queryString, http_method: method} = request, logging) do
     logging(request, logging)
-    response = HTTPotion.request(method, url(request), [body: body, headers: headers])
+    response = HTTPotion.request(method, url(request), [body: body, query: queryString, headers: headers])
     logging(response, logging)
- end
+  end
 
   def logging(message, false), do: message
   def logging(message, true) do

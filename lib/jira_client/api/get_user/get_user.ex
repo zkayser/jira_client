@@ -10,6 +10,7 @@ defmodule JiraClient.Api.GetUser do
 
   def send(attributes, _, logging \\ false) do
     response = @request.new(:get, "", "/rest/api/2/user")
+    |> @request.queryString(%{username: attributes.username})
     |> @request.send(logging)
 
     {:ok, response}

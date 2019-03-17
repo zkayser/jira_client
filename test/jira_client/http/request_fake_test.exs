@@ -89,17 +89,26 @@ defmodule JiraClient.Http.RequestFakeTest do
       request = RequestFake.new(:get, "body", "path")
       RequestFake.send(request)
 
-      assert {:get, "body", "path"} == RequestFake.next_request()
+      assert {:get, "body", "path", %{}} == RequestFake.next_request()
     end
 
-    test "capture 2 requests and reutrn a request" do
+    test "capture query string and return it" do
+      RequestFake.init()
+
+      request = RequestFake.new(:get, "body", "path") |> RequestFake.queryString(%{a: 1, b: 2})
+      RequestFake.send(request)
+
+      assert {:get, "body", "path", %{a: 1, b: 2}} == RequestFake.next_request()
+    end
+
+    test "capture 2 requests and return a request" do
       RequestFake.init()
 
       RequestFake.send(RequestFake.new(:get, "body", "path"))
       RequestFake.send(RequestFake.new(:post, "{}", "/rest/api/projects"))
 
-      assert {:get, "body", "path"} == RequestFake.next_request()
-      assert {:post, "{}", "/rest/api/projects"} == RequestFake.next_request()
+      assert {:get, "body", "path", %{}} == RequestFake.next_request()
+      assert {:post, "{}", "/rest/api/projects", %{}} == RequestFake.next_request()
     end
 
     test "get nothing when no requests have been sent" do

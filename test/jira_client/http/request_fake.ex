@@ -48,7 +48,7 @@ defmodule JiraClient.Http.RequestFake do
   def next_request() do
     next_request = Agent.get(__MODULE__, fn state -> 
         case state.requests do
-          [next_request|_] -> {next_request.http_method, next_request.body, next_request.path}
+          [next_request|_] -> {next_request.http_method, next_request.body, next_request.path, next_request.queryString}
           [] -> {:none, "", ""}
         end
       end)
@@ -66,6 +66,10 @@ defmodule JiraClient.Http.RequestFake do
       %{base64_encoded: "username:password", jira_server: "http://someserver"}
     end) do
     Request.new(method, body, path, config_get_fn)
+  end
+
+  def queryString(request, queryString) do
+    %{request | queryString: queryString}
   end
 
   def send(request, _ \\ false) do

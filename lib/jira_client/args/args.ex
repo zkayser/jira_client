@@ -23,14 +23,19 @@ defmodule JiraClient.Args do
       mandatory: [:project, :message]
     },
     "assign" => %{
-      args:      [username: :string],
-      aliases:   [u: :username],
-      mandatory: [:issue]
+      args:      [issue: :string, username: :string],
+      aliases:   [i: :issue, u: :username],
+      mandatory: [:issue, :username]
     },
     "close_issue" =>  %{
       args:      [issue: :string, logging: :boolean],
       aliases:   [i: :issue, l: :logging],
       mandatory: [:issue]
+    },
+    "user" =>  %{
+      args:      [username: :string],
+      aliases:   [u: :username],
+      mandatory: [:username]
     }
   }
 

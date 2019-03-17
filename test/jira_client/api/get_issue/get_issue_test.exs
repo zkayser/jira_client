@@ -13,7 +13,7 @@ defmodule JiraClient.Api.GetIssueTest do
 
     {:ok, response} = GetIssue.send(%{issue: "ABC-123"}, "")
 
-    assert {:get, "", "/rest/api/2/issue/ABC-123"} == RequestFake.next_request()
+    assert {:get, "", "/rest/api/2/issue/ABC-123", %{}} == RequestFake.next_request()
     assert response.body =~ "12345"
   end
  

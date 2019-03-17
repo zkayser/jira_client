@@ -13,7 +13,7 @@ defmodule JiraClient.Api.GetTransitionsTest do
 
     {:ok, _response} = GetTransitions.send(%{issue: "ABC-123"}, "")
 
-    assert {:get, "", "/rest/api/2/issue/ABC-123/transitions"} == RequestFake.next_request()
+    assert {:get, "", "/rest/api/2/issue/ABC-123/transitions", %{}} == RequestFake.next_request()
   end
 
 end
