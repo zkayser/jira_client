@@ -19,6 +19,24 @@ Generates the command
 
 ## Usage
 
+Start by getting help
+
+```bash
+jira_client help
+
+usage: jira_client [command] [arguments]
+
+      Commands:
+      configure --username "esumerfield"
+      list_projects
+      create_issue --project "PROJECT A" --message "this is an issue" [--fixVersion "1.2.3"]
+      close_issue --issue "ABC-123"
+      assign --issue "ABC-123" --username <your jira username>
+
+      Common arguments for all commands
+      [--logging] can be added to produce API logging.
+```
+
 Create a config file in your home dir (.jira/credentials.txt) to hold your jira credenitals.
 
 ```bash
@@ -35,6 +53,13 @@ $ jira_client create_issue -m "change code to make it better" -p "Project Name"
 XXX-123
 ```
 
+Assign the issue to someone:
+
+```bash
+$ jira_client assign --issue XXX-123 --username <jira username>
+Assigned
+```
+
 Once a set of commits are complete for an issue the issue can be closed.
 
 ```bash
@@ -43,15 +68,14 @@ Closed
 ```
 
 Also there are scripts that support a combination of jira integrations. This script
-creates and issue, places the issue id in the clipboard, and closes it. This cleans up the
+creates an issue, places the issue id in the clipboard, assigns it, and closes it. This cleans up the
 jira tracking side and allows you to commit against the issue.
 
-* track_change.sh --project "Project Name" --message "change code to make it better"
+* track_change.sh --project "Project Name" --username <jira username> --message "change code to make it better"
 
 ## Future command ideas
 
 * List fix versions for a project.
-* Assign issue to me
 * Initiate workflow event for issue.
 
 ## Future Developer Workflow
