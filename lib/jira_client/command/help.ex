@@ -3,7 +3,7 @@ defmodule JiraClient.Command.Help do
     {:ok, ~s(usage: jira_client [command] [arguments]
 
       Commands:
-      configure --username "esumerfield"
+      configure --username "<jira username>"
       list_projects
       create_issue --project "PROJECT A" --message "this is an issue" [--fixVersion "1.2.3"]
       close_issue --issue "ABC-123"

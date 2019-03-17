@@ -21,7 +21,7 @@ defmodule HTTPotion.Response.String.CharsTest do
           "transfer-encoding" => "chunked",
           "vary" => "Accept-Encoding",
           "x-arequestid" => "1188x2113526x5",
-          "x-ausername" => "esumerfield",
+          "x-ausername" => "some-username",
           "x-content-type-options" => "nosniff",
           "x-seraph-loginreason" => "OK"
         }
