@@ -4,7 +4,7 @@ defmodule JiraClient.Mixfile do
   def project do
     [app: :jira_client,
      version: "0.1.0",
-     elixir: "~> 1.6.1",
+     elixir: "~> 1.6.4",
      escript: [
        main_module: JiraClient,
        name: "bin/jira_client",
