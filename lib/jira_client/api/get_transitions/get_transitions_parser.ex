@@ -5,6 +5,9 @@ defmodule JiraClient.Api.GetTransitionsParser do
     parse_data Poison.Parser.parse(body)
   end
 
+  defp parse_data({:error, _}),                    do: {:error, "No transitions"}
+  defp parse_data({:ok, empty}) when empty == %{}, do: {:error, "No transitions"}
+  defp parse_data({:ok, %{transitions: []}}),      do: {:error, "No transitions"}
   defp parse_data({:ok, data}) do
     {:ok,
       Enum.map(data["transitions"], fn (transition) -> 

@@ -9,10 +9,14 @@ function usage {
 }
 
 filter=
+username=`whoami`
 
 while [[ $# -gt 0 ]]; do
   if [[ $1 == --help || $1 == -h ]]; then
     usage
+  elif [[ $1 == "--username" || $1 == "-u" ]]; then
+    shift
+    username=$1
   elif [[ $1 == --filter || $1 == -f ]]; then
     shift
     filter=$1
@@ -40,15 +44,6 @@ jira_client list_projects | \
     # Strip bad characters
     projectName=`echo $projectName | tr -d '&'`
 
-    # Generate an alias projectName.
-    #set -- $projectName
-    #code=
-    #while [[ $# -gt 0 ]]; do
-      #letter=`echo ${1:0:1} | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz'`
-      #code=${code}${letter}
-      #shift
-    #done
-
     code=`echo $projectKey | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz'`
 
     # Make sure the alias projectName is unique
@@ -65,7 +60,7 @@ jira_client list_projects | \
     done
     code=$uniqueCode
 
-    echo "alias tc${code}='track_change.sh --project \"${projectName}\" --message '" >> $aliasFile
+    echo "alias tc${code}='track_change.sh --project \"${projectName}\" --username $username --message '" >> $aliasFile
     echo "alias jct${code}='jira_client create_issue --project \"${projectName}\" --message '" >> $aliasFile
 
     foundCodes=$foundCodes,$code

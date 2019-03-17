@@ -34,5 +34,15 @@ defmodule JiraClient.Command.CloseIssueTest do
 
       assert message
     end
+
+    test "fail to load transitions" do
+      RequestFake.expect_response(%HTTPotion.Response{body: ~s({
+        "transitions": [ ]
+      }
+      )})
+
+      {:ok, args} = Args.parse(["close_issue", "-i", "XXX-123"])
+      assert {:error, "No transition called 'Done'"} == JiraClient.Command.CloseIssue.run(args)
+    end
   end
 end

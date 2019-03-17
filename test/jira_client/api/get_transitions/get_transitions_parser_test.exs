@@ -127,5 +127,13 @@ defmodule JiraClient.Api.GetTransitionsParserTest do
     assert transition.name == "QA Review"
   end
 
+  test "bad list of transitions" do
+    assert {:error, "No transitions"} == GetTransitionsParser.parse(%HTTPotion.Response{body: "{}"})
+    assert {:error, "No transitions"} == GetTransitionsParser.parse(%HTTPotion.Response{body: "{transitions:[]}"})
+  end
+
+  test "invalid json response" do
+    assert {:error, "No transitions"} == GetTransitionsParser.parse(%HTTPotion.Response{body: "Invalid JSON"})
+  end
 end
 

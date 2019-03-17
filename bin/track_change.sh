@@ -4,18 +4,22 @@ function usage {
   message=$@
 
   echo "Missing $message"
-  echo "usage: `basename $0` --project NAME --message MESSAGE"
+  echo "usage: `basename $0` --project NAME --message MESSAGE --username [jira user name]"
   exit 1
 }
 
 project=
 message=
+username=`whoami`
 
 positionalArg=1
 while [[ $# -gt 0 ]]; do
   if [[ $1 == "--project" ]]; then
     shift
     project=$1
+  elif [[ $1 == "--username" || $1 == "-u" ]]; then
+    shift
+    username=$1
   elif [[ $1 == "--message" ]]; then
     shift
     message=$1
@@ -35,8 +39,10 @@ if [[ $? -eq 0 && -n $issue_id ]]; then
     echo -n "$issue_id $message" | pbcopy
   fi
 
-  echo "Issue ${issue_id}"
+  jira_client assign --isssue "$issue_id" --username $username
   jira_client close_issue --issue "$issue_id"
+
+  echo "Issue ${issue_id}"
 else
   echo "Something went wrong"
 fi

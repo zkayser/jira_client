@@ -36,7 +36,7 @@ defmodule JiraClient.Command.CloseIssue do
     do
       {:ok, transition}
     else
-      message -> {:error, message}
+      {:error, message} -> {:error, message}
     end
   end
 
