@@ -20,7 +20,7 @@ defmodule JiraClient.Command.AssignTest do
           something: 1
         }
       ),
-      status_code: 200})
+      status_code: 204})
 
       {:ok, args} = Args.parse(["user", "--username", "someuser", "--issue", "XXX-123"])
       {:ok, message} = JiraClient.Command.Assign.run(args)
