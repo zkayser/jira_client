@@ -22,7 +22,7 @@ Generates the command
 Start by getting help
 
 ```bash
-jira_client help
+$ jira_client help
 
 usage: jira_client [command] [arguments]
 
@@ -40,7 +40,7 @@ usage: jira_client [command] [arguments]
 Create a config file in your home dir (.jira/credentials.txt) to hold your jira credenitals.
 
 ```bash
-jira_client configure --username <jira username>
+$ jira_client configure --username <jira username>
 
 Enter JIRA domain (https://YOURCOMPANY.atlassian.net) ***********
 Enter JIRA passwod: **********
@@ -71,7 +71,25 @@ Also there are scripts that support a combination of jira integrations. This scr
 creates an issue, places the issue id in the clipboard, assigns it, and closes it. This cleans up the
 jira tracking side and allows you to commit against the issue.
 
-* track_change.sh --project "Project Name" --username <jira username> --message "change code to make it better"
+```bash
+track_change.sh --project "Project Name" --username <jira username> --message "change code to make it better"
+XXX-123
+Assigned
+Closed
+```
+
+## Bash Alises
+
+To make life easier you can generate aliases for use with all your projects. The jira client gets a list of
+all your projects and creates an alias for each. Add the generated file to your login profile.
+
+The pattern is simple, jci<project key> to create an issue, or tc<project key> to use the track change process.
+
+```bash
+$ generate_aliases.sh --filter Product --username `whoami`
+Jira aliases generated
+Add ~/.jira_aliases to your .bashrc file.
+```
 
 ## Future command ideas
 

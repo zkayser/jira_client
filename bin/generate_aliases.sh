@@ -61,7 +61,7 @@ jira_client list_projects | \
     code=$uniqueCode
 
     echo "alias tc${code}='track_change.sh --project \"${projectName}\" --username $username --message '" >> $aliasFile
-    echo "alias jct${code}='jira_client create_issue --project \"${projectName}\" --message '" >> $aliasFile
+    echo "alias jci${code}='jira_client create_issue --project \"${projectName}\" --message '" >> $aliasFile
 
     foundCodes=$foundCodes,$code
   done
