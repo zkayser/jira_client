@@ -43,13 +43,13 @@ defmodule JiraClient.Args do
      command:          String.t,
      username:         String.t,
      project:          String.t, # project name
-     issue:            String.t,
+     issue_id:         String.t,
      fix_version:      String.t,
      message:          String.t,
      close_transition: String.t,
      logging:          Boolean.t
   }
-  defstruct command: "", username: "", project: "", issue: "", fix_version: "", message: "", close_transition: "", logging: false
+  defstruct command: "", username: "", project: "", issue_id: "", fix_version: "", message: "", close_transition: "", logging: false
 
   @spec parse(String.t) :: {Atom.t, JiraClient.Args.t}
   def parse(argv) do
@@ -65,7 +65,7 @@ defmodule JiraClient.Args do
        command:           hd(args),
        username:          parsed[:username],
        project:           parsed[:project],
-       issue:             parsed[:issue],
+       issue_id:          parsed[:issue],
        fix_version:       normalize_string(parsed[:fixVersion]),
        message:           parsed[:message],
        close_transition:  parsed[:closed_transition],

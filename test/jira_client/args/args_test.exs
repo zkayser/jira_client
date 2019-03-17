@@ -92,13 +92,13 @@ defmodule JiraClient.ArgsTest do
     test "close_issue all args" do
       {:ok, args} = Args.parse(["close_issue", "--issue", "XXX-123"])
 
-      assert "XXX-123" == args.issue
+      assert "XXX-123" == args.issue_id
     end
 
     test "close_issue all aliases" do
       {:ok, args} = Args.parse(["close_issue", "-i", "XXX-123"])
 
-      assert "XXX-123" == args.issue
+      assert "XXX-123" == args.issue_id
     end
 
     test "close_issue missing argument" do
@@ -121,7 +121,7 @@ defmodule JiraClient.ArgsTest do
       {:ok, args} = Args.parse(["assign", "--issue", "XXX-123", "--username", "somename"])
 
       assert "assign" == args.command
-      assert "XXX-123" == args.issue
+      assert "XXX-123" == args.issue_id
       assert "somename" == args.username
     end
   end

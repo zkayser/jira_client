@@ -10,10 +10,10 @@ defmodule JiraClient.Api.GetUserParser do
       %{
         username: data["name"],
         email: data["emailAddress"],
-        accountId: data["accountId"],
-        displayName: data["displayName"],
+        account_id: data["accountId"],
+        display_name: data["displayName"],
         active: data["active"],
-        timeZone: data["timeZone"],
+        time_zone: data["timeZone"],
         locale: data["locale"]
       }
     }

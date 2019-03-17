@@ -20,8 +20,8 @@ defmodule JiraClient.Command.CloseIssue do
   @behaviour JiraClient.Command
 
   def run(args) do
-    with {:ok, transition} <- find_transition(args.issue, args.logging),
-         {:ok, result}     <- close_issue(args.issue, transition.id, args.logging)
+    with {:ok, transition} <- find_transition(args.issue_id, args.logging),
+         {:ok, result}     <- close_issue(args.issue_id, transition.id, args.logging)
     do
       {:ok, "#{inspect result}"}
     else

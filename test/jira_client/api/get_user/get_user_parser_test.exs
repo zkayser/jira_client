@@ -32,7 +32,7 @@ defmodule JiraClient.Api.GetUserParserTest do
     """
     {:ok, data} = GetUserParser.parse(%HTTPotion.Response{body: json})
 
-    assert data.accountId == "99:27935d01-92a7-4687-8272-a9b8d3b2ae2e";
+    assert data.account_id == "99:27935d01-92a7-4687-8272-a9b8d3b2ae2e";
   end
 end
 

@@ -18,8 +18,8 @@ defmodule JiraClient.Command.User do
   end
 
   defp get_user(username, logging) do
-    with {:ok, response}    <- ApiGetUser.send(%{username: username}, "", logging),
-         {:ok, user} <- ApiGetUserParser.parse(response)
+    with {:ok, response} <- ApiGetUser.send(%{username: username}, "", logging),
+         {:ok, user}     <- ApiGetUserParser.parse(response)
     do
       {:ok, user}
     else

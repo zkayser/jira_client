@@ -24,30 +24,42 @@ defmodule JiraClient.Command.Assign do
     }'
   """
 
-  #alias JiraClient.Api.Assign,          as: ApiAssign
-  #alias JiraClient.Api.AssignFormatter, as: ApiAssignFormatter
-  #alias JiraClient.Api.AssignParser,    as: ApiAssignParser
+  alias JiraClient.Api.GetUser,         as: ApiGetUser
+  alias JiraClient.Api.GetUserParser,   as: ApiGetUserParser
 
-  #@behaviour JiraClient.Command
+  alias JiraClient.Api.Assign,          as: ApiAssign
+  alias JiraClient.Api.AssignParser,    as: ApiAssignParser
 
-  #def run(args) do
-    #with {:ok, result}     <- assign_issue(args.issue, args.logging)
-    #do
-      #{:ok, "#{inspect result}"}
-    #else
-      #message -> message
-    #end
-  #end
+  @behaviour JiraClient.Command
 
-  #defp assign_issue(issue_id, logging) do
-    #with {:ok, request}  <- ApiAssignFormatter.format(%{issue_id: issue_id}),
-         #{:ok, response} <- ApiAssign.send(%{account_id: account_id}, request, logging),
-         #{:ok, _result}  <- ApiAssignParser.parse(response)
-    #do
-      #{:ok, "Assigned"}
-    #else
-      #message -> {:error, message}
-    #end
-  #end
+  def run(args) do
+    with  {:ok, user}   <- get_user(args.username, args.logging),
+          {:ok, result} <- assign_issue(user.account_id, args.issue_id, args.logging)
+    do
+      {:ok, "#{inspect result}"}
+    else
+      message -> message
+    end
+  end
+
+  defp get_user(username, logging) do
+    with {:ok, response} <- ApiGetUser.send(%{username: username}, "", logging),
+         {:ok, user }    <- ApiGetUserParser.parse(response)
+    do
+      {:ok, user}
+    else
+      message -> {:error, message}
+    end
+  end
+
+  defp assign_issue(account_id, issue_id, logging) do
+    with {:ok, response} <- ApiAssign.send(%{account_id: account_id, issue_id: issue_id}, "", logging),
+         {:ok, _result}  <- ApiAssignParser.parse(response)
+    do
+      {:ok, "Assigned"}
+    else
+      {:error, message} -> {:error, message}
+    end
+  end
 end
 
