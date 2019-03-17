@@ -72,7 +72,7 @@ creates an issue, places the issue id in the clipboard, assigns it, and closes i
 jira tracking side and allows you to commit against the issue.
 
 ```bash
-track_change.sh --project "Project Name" --username <jira username> --message "change code to make it better"
+$ track_change.sh --project "Project Name" --username <jira username> --message "change code to make it better"
 XXX-123
 Assigned
 Closed
