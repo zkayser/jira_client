@@ -39,7 +39,7 @@ if [[ $? -eq 0 && -n $issue_id ]]; then
     echo -n "$issue_id $message" | pbcopy
   fi
 
-  jira_client assign --isssue "$issue_id" --username $username
+  jira_client assign --issue "$issue_id" --username $username
   jira_client close_issue --issue "$issue_id"
 
   echo "Issue ${issue_id}"
