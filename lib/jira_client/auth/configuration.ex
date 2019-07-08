@@ -30,7 +30,7 @@ defmodule JiraClient.Auth.Configurations do
     else
       false ->
         IO.puts "Your credentials have not been configured. Run the following command for access your Jira instance: "
-        IO.puts "jira_client configure --username <jira username> --password <jira password>"
+        IO.puts "jira_client configure --username <jira username> --api_token <jira api_token>"
       {:error, reason} ->
         IO.puts "Something went wrong: #{reason}"
     end

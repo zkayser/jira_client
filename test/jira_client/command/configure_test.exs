@@ -17,7 +17,7 @@ defmodule JiraClient.Command.ConfigureTest do
     assert result == "Configuration complete"
   end
 
-  test "configure with password with no carriage return line feed" do
+  test "configure with api token with no carriage return line feed" do
     {:ok, _} = Configure.run_with_inputs(%Args{username: "fred"}, fn -> ["secret\r\n", "http://someserver\r\n"] end)
 
     config = Configurations.get()
@@ -26,7 +26,7 @@ defmodule JiraClient.Command.ConfigureTest do
     assert "http://someserver" == config.jira_server
   end
 
-  test "read password and jira_server from stdin" do
+  test "read api token and jira_server from stdin" do
     {:ok, _} = Configure.run_with_inputs(%Args{username: "fred"}, fn -> ["secret", "http://someserver"] end)
 
     config = Configurations.get()

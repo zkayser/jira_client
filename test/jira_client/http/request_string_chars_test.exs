@@ -5,7 +5,7 @@ defmodule JiraClient.Http.Request.String.CharsTest do
 
   setup do
     [config_get_fn: fn -> 
-      %JiraClient.Configurations{ base64_encoded: Base.encode64("username:password"), jira_server: "http://someserver" } 
+      %JiraClient.Configurations{ base64_encoded: Base.encode64("username:api_token"), jira_server: "http://someserver" } 
     end]
   end
 

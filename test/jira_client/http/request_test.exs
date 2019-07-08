@@ -10,7 +10,7 @@ defmodule JiraClient.Http.RequestTest do
 
   setup do
     [config_get_fn: fn -> 
-      %JiraClient.Configurations{ base64_encoded: Base.encode64("username:password"), jira_server: "http://someserver" } 
+      %JiraClient.Configurations{ base64_encoded: Base.encode64("username:api_token"), jira_server: "http://someserver" } 
     end]
   end
 
@@ -22,7 +22,7 @@ defmodule JiraClient.Http.RequestTest do
     assert req.http_method == :get
     assert req.path == @example_path
     assert req.queryString == %{a: 1, b: 2}
-    assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Base.encode64("username:password")}"]
+    assert req.headers == ["Content-Type": "application/json", "Authorization": "Basic #{Base.encode64("username:api_token")}"]
     assert req.body == body
     assert req.base_url == "http://someserver"
   end

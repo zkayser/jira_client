@@ -2,12 +2,12 @@ defmodule JiraClient.Auth.ConfigurationsMockTest do
   use ExUnit.Case, async: true
 
   @credentials Application.get_env(:jira_client, :credentials_module)
-  @user_creds "username:password"
+  @user_creds "username:api_token"
 
   describe "init" do
-    test "credentials with username and password" do
-      {username, password} = {"username", "secretpassword"}
-      assert @credentials.init(username, password).base64_encoded == Base.encode64("#{username}:#{password}")
+    test "credentials with username and api_token" do
+      {username, api_token} = {"username", "secret_api_token"}
+      assert @credentials.init(username, api_token).base64_encoded == Base.encode64("#{username}:#{api_token}")
     end
 
     test "blank credentials" do
@@ -25,7 +25,7 @@ defmodule JiraClient.Auth.ConfigurationsMockTest do
       assert @credentials.get().base64_encoded == Base.encode64(@user_creds)
     end
 
-    test "prompts for username and password when credentials file does not exist" do
+    test "prompts for username and api_token when credentials file does not exist" do
       Application.delete_env(:jira_client, :test_creds)
       assert @credentials.get().base64_encoded == Base.encode64(@user_creds)
     end

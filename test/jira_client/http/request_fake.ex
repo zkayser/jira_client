@@ -63,7 +63,7 @@ defmodule JiraClient.Http.RequestFake do
   end
 
   def new(method, body, path, config_get_fn \\ fn -> 
-      %{base64_encoded: "username:password", jira_server: "http://someserver"}
+      %{base64_encoded: "username:api_token", jira_server: "http://someserver"}
     end) do
     Request.new(method, body, path, config_get_fn)
   end

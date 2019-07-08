@@ -10,14 +10,14 @@ defmodule JiraClient.Command.Configure do
   def run(args) do
     run_with_inputs(args, fn -> 
       domain = domain_get("Enter JIRA domain (https://YOURCOMPANY.atlassian.net)")
-      password = password_get("Enter JIRA passwod: ", true)
-      [password, domain]
+      api_token = api_token_get("Enter JIRA API token: ", true)
+      [api_token, domain]
     end)
   end
 
   def run_with_inputs(args, inputs_getter) do
     case inputs_getter.() do
-      [password, jira_server] ->  Configurations.init(args.username, String.trim(password), String.trim(jira_server))
+      [api_token, jira_server] ->  Configurations.init(args.username, String.trim(api_token), String.trim(jira_server))
     end
     
     {:ok, "Configuration complete"}
@@ -27,12 +27,12 @@ defmodule JiraClient.Command.Configure do
     IO.gets(prompt <> " ")
   end
 
-  # Password prompt that hides input by every 1ms
+  # API Token prompt that hides input by every 1ms
   # clearing the line with stderr
-  def password_get(prompt, false) do
+  def api_token_get(prompt, false) do
     IO.gets(prompt <> " ")
   end
-  def password_get(prompt, true) do
+  def api_token_get(prompt, true) do
     pid   = spawn_link(fn -> loop(prompt) end)
     ref   = make_ref()
     value = IO.gets(prompt <> " ")

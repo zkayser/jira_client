@@ -17,6 +17,13 @@ Generates the command
 
     bin/jira_client
 
+## JIRA Token Setup
+
+For API access you will need to create a token. This token is used in place of your password
+in all API calls.
+
+    https://id.atlassian.com/manage/api-tokens
+
 ## Usage
 
 Start by getting help
@@ -43,7 +50,7 @@ Create a config file in your home dir (.jira/credentials.txt) to hold your jira 
 $ jira_client configure --username <jira username>
 
 Enter JIRA domain (https://YOURCOMPANY.atlassian.net) ***********
-Enter JIRA passwod: **********
+Enter JIRA API token: **********
 ```
 
 Create an issue.

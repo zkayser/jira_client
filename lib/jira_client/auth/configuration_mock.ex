@@ -6,13 +6,13 @@ defmodule JiraClient.Auth.ConfigurationsMock do
   defmodule FakeIO do
     def puts(string), do: string
     def gets("Username: "), do: "username"
-    def gets("Password: "), do: "password"
+    def gets("API Token: "), do: "api_token"
   end
 
   def init(), do: %Configuration{errors: ["Credentials not provided"]}
   def init("", ""), do: %Configuration{errors: ["Credentials not provided"]}
-  def init(username, password) do
-    %Configuration{base64_encoded: Base.encode64("#{username}:#{password}")}
+  def init(username, api_token) do
+    %Configuration{base64_encoded: Base.encode64("#{username}:#{api_token}")}
     |> store()
   end
 
@@ -21,8 +21,8 @@ defmodule JiraClient.Auth.ConfigurationsMock do
       creds = Application.get_env(:jira_client, :test_creds)
       %Configuration{base64_encoded: creds}
     else
-      FakeIO.puts "Please enter your username and password"
-      init(FakeIO.gets("Username: "), FakeIO.gets("Password: "))
+      FakeIO.puts "Please enter your username and api token"
+      init(FakeIO.gets("Username: "), FakeIO.gets("API Token: "))
     end
   end
 

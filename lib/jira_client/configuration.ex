@@ -3,7 +3,7 @@ defmodule JiraClient.Configurations do
   @doc """
   Initializes a user's Jira credentials
   """
-  @callback init(username :: String.t, password :: String.t) :: __MODULE__.t
+  @callback init(username :: String.t, api_token :: String.t) :: __MODULE__.t
 
   @doc """
   Returns a user's encoded credentials
